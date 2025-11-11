@@ -1,14 +1,14 @@
-package com.principal.agrotiliapp.ui.gallery;
+package com.principal.agrotiliapp.ui.tareas;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class TareasViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public TareasViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");
     }

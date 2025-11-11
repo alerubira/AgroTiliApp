@@ -1,4 +1,4 @@
-package com.principal.agrotiliapp.ui.slideshow;
+package com.principal.agrotiliapp.ui.logouts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.principal.agrotiliapp.databinding.FragmentSlideshowBinding;
 
-public class SlideshowFragment extends Fragment {
+public class LogoutsFragment extends Fragment {
 
     private FragmentSlideshowBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        LogoutsViewModel logoutsViewModel =
+                new ViewModelProvider(this).get(LogoutsViewModel.class);
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        logoutsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

@@ -1,4 +1,4 @@
-package com.principal.agrotiliapp.ui.gallery;
+package com.principal.agrotiliapp.ui.perfil;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.principal.agrotiliapp.databinding.FragmentGalleryBinding;
+import com.principal.agrotiliapp.databinding.FragmentHomeBinding;
 
-public class GalleryFragment extends Fragment {
+public class PerfilFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        PerfilViewModel homeViewModel =
+                new ViewModelProvider(this).get(PerfilViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textHome;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

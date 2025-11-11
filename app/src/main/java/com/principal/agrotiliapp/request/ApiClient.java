@@ -80,7 +80,7 @@ public class ApiClient {
                                @Field("claveNueva")String claveNueva);
 
         @FormUrlEncoded
-        @POST("api/Empleados/EnviarEmail")
+        @POST("api/Empleados/EnviarMail")
         Call<String>enviarEmail(
                                @Field("Usuario")String email);
 

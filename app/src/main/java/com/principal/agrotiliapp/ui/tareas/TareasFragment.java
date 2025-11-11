@@ -1,4 +1,4 @@
-package com.principal.agrotiliapp.ui.home;
+package com.principal.agrotiliapp.ui.tareas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.principal.agrotiliapp.databinding.FragmentHomeBinding;
+import com.principal.agrotiliapp.databinding.FragmentGalleryBinding;
 
-public class HomeFragment extends Fragment {
+public class TareasFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        TareasViewModel tareasViewModel =
+                new ViewModelProvider(this).get(TareasViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textGallery;
+        tareasViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

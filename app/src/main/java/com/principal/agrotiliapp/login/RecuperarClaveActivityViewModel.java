@@ -56,11 +56,11 @@ public class RecuperarClaveActivityViewModel extends AndroidViewModel {
         if(claveNueva==null||claveNueva.isEmpty()||claveEmail==null||claveEmail.isEmpty()
         ||claverepetida==null||claverepetida.isEmpty()){
             mMensage.setValue("Los datos son obligatorios");
-        }else if(claveNueva!=claverepetida){
+        }else if(claveNueva.equals(claverepetida)){
+            resetearClave(claveEmail,claveNueva);
 
-               mMensage.setValue("La clave nueva debe ser igual a la clave repetida");
             }else{
-                resetearClave(claveEmail,claveNueva);
+            mMensage.setValue("La clave nueva debe ser igual a la clave repetida");
             }
         }
     }

@@ -26,9 +26,10 @@ public class RecuperarClaveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding= ActivityRecuperarClaveBinding.inflate(getLayoutInflater());
         Intent intent = getIntent();
-        mv.recibirIntent(intent);
+
         mv = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(RecuperarClaveActivityViewModel.class);
         setContentView(binding.getRoot());
+        mv.recibirIntent(intent);
         mv.getMMensage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
