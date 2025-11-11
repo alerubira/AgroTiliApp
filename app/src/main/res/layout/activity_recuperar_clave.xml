@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".login.RecuperarClaveActivity">
+
+    <EditText
+        android:id="@+id/edtClaveEmail"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/side_nav_bar"
+        android:ems="10"
+        android:hint="Ingrese la clave que esta en su email"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edtClaveNueva"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/side_nav_bar"
+        android:ems="10"
+        android:hint="ingrese una clave nueva"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtClaveEmail" />
+
+    <EditText
+        android:id="@+id/edtClaveRepetida"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/side_nav_bar"
+        android:ems="10"
+        android:hint="ingrese una clave nueva"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtClaveNueva" />
+
+    <Button
+        android:id="@+id/btnResetClave"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginRight="30dp"
+        android:text="Modificar Clave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtClaveRepetida" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
