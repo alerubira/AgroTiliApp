@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.principal.agrotiliapp.databinding.FragmentHomeBinding;
+
+import com.principal.agrotiliapp.databinding.FragmentPerfilBinding;
 
 public class PerfilFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentPerfilBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         PerfilViewModel homeViewModel =
                 new ViewModelProvider(this).get(PerfilViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentPerfilBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 
