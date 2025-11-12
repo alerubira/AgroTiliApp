@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.principal.agrotiliapp.databinding.FragmentSlideshowBinding;
+import com.principal.agrotiliapp.databinding.FragmentLogoutsBinding;
 
 public class LogoutsFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentLogoutsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         LogoutsViewModel logoutsViewModel =
                 new ViewModelProvider(this).get(LogoutsViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentLogoutsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;

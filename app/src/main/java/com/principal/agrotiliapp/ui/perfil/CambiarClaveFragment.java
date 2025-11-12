@@ -45,6 +45,32 @@ public class CambiarClaveFragment extends Fragment {
                         .show();
             }
         });
+        mViewModel.getMExito().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Cambiar Clave")
+                        .setMessage(s)
+
+                        .setNegativeButton("Cerrar", (dialog, which) -> {
+                            // Solo cierra el diálogo
+                            dialog.dismiss();
+                        })
+                        .show();
+                binding.edtClaveActual.setText("");
+                binding.edtClaveNuevaC.setText("");
+                binding.edtClaveRepetidaC.setText("");
+            }
+        });
+        binding.btnCambiarClave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String clave=binding.edtClaveActual.getText().toString();
+                String claveNueva=binding.edtClaveNuevaC.getText().toString();
+                String claverepetida=binding.edtClaveRepetidaC.getText().toString();
+                mViewModel.corroborarClaves(clave,claveNueva,claverepetida);
+            }
+        });
         return root;
     }
 

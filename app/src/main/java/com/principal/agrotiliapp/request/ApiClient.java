@@ -24,7 +24,9 @@ public class ApiClient {
     //public static final String URLBASE = "http://192.168.1.108:5164/";
     //public static final String URLBASE = "https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/";//virtual
 
-    public static final String URLBASE = "http://192.168.1.108:5294/";
+   // public static final String URLBASE = "http://192.168.1.108:5294/";//en el negocio
+    public static final String URLBASE = "http://192.168.1.104:5294/";//en casa
+
 
 
     public static AgroTiliService getApiAgroTili() {

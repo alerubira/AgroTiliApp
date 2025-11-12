@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/cambiarClaveFragment"
         android:name="com.principal.agrotiliapp.ui.perfil.CambiarClaveFragment"
-        android:label="fragment_cambiar_clave"
+        android:label="@string/cambiar_clave"
         tools:layout="@layout/fragment_cambiar_clave" >
         <action
             android:id="@+id/action_cambiarClaveFragment_to_nav_perfil"

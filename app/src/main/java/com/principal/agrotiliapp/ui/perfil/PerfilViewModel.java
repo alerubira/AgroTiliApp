@@ -53,4 +53,15 @@ public class PerfilViewModel extends AndroidViewModel {
             }
         });
     }
+    public void editarModificar(String textoBoton){
+        if(textoBoton.equals("@string/editar_perfil")){
+            //hacer un mutable y en el fragment cmabiar los estados del editext necesario y el texto del bon
+        }
+        if(textoBoton.equals("@string/modificar_perfil")){
+            //haver un mutable par captar los cambios,cambiar los estados y el texto del botony efectuar el cambio
+        }
+    }
+    public void modificarPerfil(String nombre,String apellido){
+        //hacer el resteo con el empleado del mutable,verificar que recive el metodo en el seridor
+    }
 }

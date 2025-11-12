@@ -19,6 +19,7 @@ import retrofit2.Response;
 
 public class CambiarClaveViewModel extends AndroidViewModel {
    private MutableLiveData<String>mMensage=new MutableLiveData<>();
+   private MutableLiveData<String>mExito=new MutableLiveData<>();
    private Context context;
     public CambiarClaveViewModel(@NonNull Application application) {
         super(application);
@@ -26,6 +27,9 @@ public class CambiarClaveViewModel extends AndroidViewModel {
     }
     public LiveData<String>getMMensage(){
         return mMensage;
+    }
+    public LiveData<String>getMExito(){
+        return mExito;
     }
 
     public void corroborarClaves(String claveActual,String claveNueva,String claveRepetida){
@@ -47,7 +51,7 @@ public class CambiarClaveViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    mMensage.postValue("La clave fue cambiada con exito");
+                    mExito.postValue("La clave fue cambiada con exito");
                 }else{
                     mMensage.postValue(("Error al cambiar la clave: "+response.message()));
                 }

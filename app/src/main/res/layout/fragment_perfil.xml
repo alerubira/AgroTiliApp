@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo"
     tools:context=".ui.perfil.PerfilFragment">
 
     <Button
@@ -28,7 +29,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtIdEmpleado" />
+        app:layout_constraintTop_toBottomOf="@+id/edtIdEmpleado"
+        android:enabled="false" />
 
     <EditText
         android:id="@+id/edtNombre"
@@ -42,7 +44,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtRole" />
+        app:layout_constraintTop_toBottomOf="@+id/edtRole"
+        android:enabled="false" />
 
     <EditText
         android:id="@+id/edtApellido"
@@ -56,7 +59,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/edtNombre"
+        android:enabled="false" />
 
     <EditText
         android:id="@+id/edtIdEmpleado"
@@ -68,7 +72,8 @@
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:enabled="false" />
 
     <EditText
         android:id="@+id/edtEmail"
@@ -82,7 +87,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtApellido" />
+        app:layout_constraintTop_toBottomOf="@+id/edtApellido"
+        android:enabled="false" />
 
     <EditText
         android:id="@+id/edtFechaIngreso"
@@ -96,7 +102,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        android:enabled="false" />
 
     <Button
         android:id="@+id/btnEditarModificar"

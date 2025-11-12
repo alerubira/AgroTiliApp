@@ -10,22 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.principal.agrotiliapp.databinding.FragmentGalleryBinding;
+import com.principal.agrotiliapp.databinding.FragmentTareasBinding;
 
 public class TareasFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentTareasBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         TareasViewModel tareasViewModel =
                 new ViewModelProvider(this).get(TareasViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentTareasBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        tareasViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 
