@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +8,70 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo">
+        <EditText
+            android:id="@+id/edtClaveActual"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/side_nav_bar"
+            android:ems="10"
+            android:hint="Ingrese su clave"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/edtClaveNuevaC"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/side_nav_bar"
+            android:ems="10"
+            android:hint="ingrese una clave nueva"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.447"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtClaveActual" />
 
+        <EditText
+            android:id="@+id/edtClaveRepetidaC"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/side_nav_bar"
+            android:ems="10"
+            android:hint="Repita la Clave Nueva"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtClaveNuevaC" />
+        <Button
+            android:id="@+id/btnCambiarClave"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginRight="30dp"
+            android:text="Modificar Clave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtClaveRepetidaC" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

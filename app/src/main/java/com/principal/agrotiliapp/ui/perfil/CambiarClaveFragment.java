@@ -1,7 +1,9 @@
 package com.principal.agrotiliapp.ui.perfil;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,7 +31,20 @@ public class CambiarClaveFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(CambiarClaveViewModel.class);
         binding=FragmentCambiarClaveBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
+        mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Cambiar Clave")
+                        .setMessage(s)
 
+                        .setNegativeButton("Cerrar", (dialog, which) -> {
+                            // Solo cierra el diálogo
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
+        });
         return root;
     }
 

@@ -1,6 +1,8 @@
 package com.principal.agrotiliapp.clases;
 
-public class Empleados {
+import java.io.Serializable;
+
+public class Empleados implements Serializable {
     /*
     "id_empleado": 1,
     "id_role": 2,

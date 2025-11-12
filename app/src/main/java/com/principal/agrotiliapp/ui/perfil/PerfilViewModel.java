@@ -1,19 +1,56 @@
 package com.principal.agrotiliapp.ui.perfil;
 
+import android.app.Application;
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PerfilViewModel extends ViewModel {
+import com.principal.agrotiliapp.clases.Empleados;
+import com.principal.agrotiliapp.request.ApiClient;
 
-    private final MutableLiveData<String> mText;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    public PerfilViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+public class PerfilViewModel extends AndroidViewModel {
+      private MutableLiveData<Empleados> mEmpleado=new MutableLiveData<>();
+      private MutableLiveData<String> mMensage=new MutableLiveData<>();
+      private Context context;
+      private Empleados empleado;
+
+    public PerfilViewModel(@NonNull Application application) {
+        super(application);
+        context=getApplication();
     }
+    public LiveData<Empleados>getMEmpleado(){
+        return mEmpleado;
+    }
+    public LiveData<String>getMMensage(){
+        return mMensage;
+    }
+    public void obtenrPerfil(){
+        String token=ApiClient.leerToken(context);
+        ApiClient.AgroTiliService api=ApiClient.getApiAgroTili();
+        Call<Empleados> llamada = api.obtenerEmpleado(token);
+        llamada.enqueue(new Callback<Empleados>() {
+            @Override
+            public void onResponse(Call<Empleados> call, Response<Empleados> response) {
+                if(response.isSuccessful()){
+                     empleado=response.body();
+                     mEmpleado.postValue(empleado);
+                }else{
+                    mMensage.postValue("Error al buscar el Empleado: "+response.message());
+                }
+            }
 
-    public LiveData<String> getText() {
-        return mText;
+            @Override
+            public void onFailure(Call<Empleados> call, Throwable t) {
+               mMensage.postValue("Error en el servidor: "+t.getMessage());
+            }
+        });
     }
 }
