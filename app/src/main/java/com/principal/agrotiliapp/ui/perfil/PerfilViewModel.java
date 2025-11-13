@@ -19,6 +19,9 @@ import retrofit2.Response;
 public class PerfilViewModel extends AndroidViewModel {
       private MutableLiveData<Empleados> mEmpleado=new MutableLiveData<>();
       private MutableLiveData<String> mMensage=new MutableLiveData<>();
+      private MutableLiveData<String>mEditar=new MutableLiveData<>();
+      private MutableLiveData<String>mModificar=new MutableLiveData<>();
+      private MutableLiveData<String>mModificado=new MutableLiveData<>();
       private Context context;
       private Empleados empleado;
 
@@ -31,6 +34,15 @@ public class PerfilViewModel extends AndroidViewModel {
     }
     public LiveData<String>getMMensage(){
         return mMensage;
+    }
+    public LiveData<String>getMEditar(){
+        return mEditar;
+    }
+    public LiveData<String>getMModificar(){
+        return mModificar;
+    }
+    public LiveData<String>getMModificado(){
+        return mModificado;
     }
     public void obtenrPerfil(){
         String token=ApiClient.leerToken(context);
@@ -55,13 +67,40 @@ public class PerfilViewModel extends AndroidViewModel {
     }
     public void editarModificar(String textoBoton){
         if(textoBoton.equals("@string/editar_perfil")){
-            //hacer un mutable y en el fragment cmabiar los estados del editext necesario y el texto del bon
+            mEditar.setValue("");
         }
         if(textoBoton.equals("@string/modificar_perfil")){
-            //haver un mutable par captar los cambios,cambiar los estados y el texto del botony efectuar el cambio
+            mModificar.setValue("");
         }
     }
-    public void modificarPerfil(String nombre,String apellido){
-        //hacer el resteo con el empleado del mutable,verificar que recive el metodo en el seridor
+    public void corroborarCampos(String nombre,String apellido){
+        if(nombre==null||nombre.isEmpty()||apellido==null||apellido.isEmpty()){
+            mMensage.setValue("El nombre y el apellido son obligarorios");
+        }else{
+            modificarPerfil( nombre,apellido);
+        }
+    }
+    private void modificarPerfil(String nombre,String apellido){
+        Empleados empleado=mEmpleado.getValue();
+        empleado.setNombre(nombre);
+        empleado.setApellido(apellido);
+        String token=ApiClient.leerToken(context);
+        ApiClient.AgroTiliService api=ApiClient.getApiAgroTili();
+        Call<Empleados> llamada = api.actualizarEmpleado(token,empleado);
+        llamada.enqueue(new Callback<Empleados>() {
+            @Override
+            public void onResponse(Call<Empleados> call, Response<Empleados> response) {
+                if(response.isSuccessful()){
+                    mModificado.postValue("El perfil del empleado fue modificado con exito");
+                }else{
+                    mMensage.postValue("Error al modificar el perfil del empleado:"+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Empleados> call, Throwable t) {
+                     mMensage.postValue("Erroe en el servidor: "+t.getMessage());
+            }
+        });
     }
 }

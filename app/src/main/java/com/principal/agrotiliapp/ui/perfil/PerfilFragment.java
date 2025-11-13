@@ -47,8 +47,8 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onChanged(Empleados empleado) {
                 binding.edtIdEmpleado.setText("Codigo Interno: "+empleado.getId_empleado());
-                binding.edtNombre.setText("Nombre: "+empleado.getNombre());
-                binding.edtApellido.setText("Apellido: "+empleado.getApellido());
+                binding.edtNombre.setText(empleado.getNombre());
+                binding.edtApellido.setText(empleado.getApellido());
                 binding.edtRole.setText("Rol dentro de la Empresa: "+empleado.getNombre_role());
                 binding.edtEmail.setText("Email: "+empleado.getEmail());
                 binding.edtFechaIngreso.setText("Fecha de Ingreso: "+empleado.getFecha_ingreso());
@@ -66,6 +66,39 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mv.editarModificar(binding.btnEditarModificar.getText().toString());
+            }
+        });
+        mv.getMEditar().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+               binding.btnEditarModificar.setText("@string/modificar_perfil");
+               binding.edtNombre.setEnabled(true);
+               binding.edtApellido.setEnabled(true);
+            }
+        });
+        mv.getMModificar().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                String nombre=binding.edtNombre.getText().toString();
+                String apellido=binding.edtApellido.getText().toString();
+                mv.corroborarCampos(nombre,apellido);
+            }
+        });
+        mv.getMModificado().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                binding.btnEditarModificar.setText("@string/editar_perfil");
+                binding.edtNombre.setEnabled(false);
+                binding.edtApellido.setEnabled(false);
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Perfil")
+                        .setMessage(s)
+
+                        .setNegativeButton("Cerrar", (dialog, which) -> {
+                            // Solo cierra el diálogo
+                            dialog.dismiss();
+                        })
+                        .show();
             }
         });
         mv.obtenrPerfil();

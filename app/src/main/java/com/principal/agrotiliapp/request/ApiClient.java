@@ -24,8 +24,8 @@ public class ApiClient {
     //public static final String URLBASE = "http://192.168.1.108:5164/";
     //public static final String URLBASE = "https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/";//virtual
 
-   // public static final String URLBASE = "http://192.168.1.108:5294/";//en el negocio
-    public static final String URLBASE = "http://192.168.1.104:5294/";//en casa
+   public static final String URLBASE = "http://192.168.1.108:5294/";//en el negocio
+   // public static final String URLBASE = "http://192.168.1.104:5294/";//en casa
 
 
 
@@ -92,5 +92,8 @@ public class ApiClient {
                                @Field("email")String email,
                                @Field("claveEmail")String claveEmail,
                                @Field("claveNueva")String claveNueva);
+
+        @GET("api/Tipos_Tareas")
+        Call<Empleados>obtenerTiposTareas(@Header("Authorization")String token);
     }
 }
