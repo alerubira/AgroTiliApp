@@ -1,19 +1,27 @@
 package com.principal.agrotiliapp.ui.logouts;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class LogoutsViewModel extends ViewModel {
+import com.principal.agrotiliapp.request.ApiClient;
 
-    private final MutableLiveData<String> mText;
+public class LogoutsViewModel extends AndroidViewModel {
 
-    public LogoutsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+    private MutableLiveData<String> mDeslogueado=new MutableLiveData<>();
+    public LogoutsViewModel(@NonNull Application application) {
+        super(application);
     }
+    public LiveData<String> getMDeslogueado(){
+        return mDeslogueado;
+    }
+    public void desloquearse(){
+        ApiClient.borrarToken(getApplication());
 
-    public LiveData<String> getText() {
-        return mText;
+        mDeslogueado.setValue("deslogueado");
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.principal.agrotiliapp.R;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
 
@@ -66,11 +67,12 @@ public class PerfilViewModel extends AndroidViewModel {
         });
     }
     public void editarModificar(String textoBoton){
-        if(textoBoton.equals("@string/editar_perfil")){
+        if(textoBoton.equals(context.getString(R.string.editar_perfil))){
             mEditar.setValue("");
-        }
-        if(textoBoton.equals("@string/modificar_perfil")){
+        }else if(textoBoton.equals(context.getString(R.string.modificar_perfil))){
             mModificar.setValue("");
+        }else{
+            mMensage.setValue("No se puede realizar la accion");
         }
     }
     public void corroborarCampos(String nombre,String apellido){

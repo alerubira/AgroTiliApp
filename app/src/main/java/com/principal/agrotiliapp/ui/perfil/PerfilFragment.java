@@ -65,13 +65,14 @@ public class PerfilFragment extends Fragment {
         binding.btnEditarModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mv.editarModificar(binding.btnEditarModificar.getText().toString());
             }
         });
         mv.getMEditar().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-               binding.btnEditarModificar.setText("@string/modificar_perfil");
+               binding.btnEditarModificar.setText(getString(R.string.modificar_perfil));
                binding.edtNombre.setEnabled(true);
                binding.edtApellido.setEnabled(true);
             }
@@ -87,7 +88,7 @@ public class PerfilFragment extends Fragment {
         mv.getMModificado().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                binding.btnEditarModificar.setText("@string/editar_perfil");
+                binding.btnEditarModificar.setText(getText(R.string.editar_perfil));
                 binding.edtNombre.setEnabled(false);
                 binding.edtApellido.setEnabled(false);
                 new AlertDialog.Builder(getContext())
@@ -103,6 +104,14 @@ public class PerfilFragment extends Fragment {
         });
         mv.obtenrPerfil();
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.btnEditarModificar.setText(getText(R.string.editar_perfil));
+        binding.edtNombre.setEnabled(false);
+        binding.edtApellido.setEnabled(false);
     }
 
     @Override

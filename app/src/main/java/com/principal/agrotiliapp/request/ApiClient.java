@@ -5,7 +5,12 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Empleados;
+import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
+import com.principal.agrotiliapp.clases.Tipos_Tareas;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -18,13 +23,14 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Query;
 
 public class ApiClient {
     // IP de tu PC + puerto donde corre la API HTTP
     //public static final String URLBASE = "http://192.168.1.108:5164/";
     //public static final String URLBASE = "https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/";//virtual
 
-   public static final String URLBASE = "http://192.168.1.108:5294/";//en el negocio
+    public static final String URLBASE = "http://192.168.1.108:5294/";//en el negocio
    // public static final String URLBASE = "http://192.168.1.104:5294/";//en casa
 
 
@@ -94,6 +100,15 @@ public class ApiClient {
                                @Field("claveNueva")String claveNueva);
 
         @GET("api/Tipos_Tareas")
-        Call<Empleados>obtenerTiposTareas(@Header("Authorization")String token);
+        Call<List<Tipos_Tareas>>obtenerTiposTareas(@Header("Authorization")String token);
+        @GET("api/Campos")
+        Call<List<Campos>> obtenerCamposPorCapataz(@Header("Authorization")String token);
+        @GET("api/Empleados/operariosDesocupados")
+        Call<List<Empleados>> obtenerOperariosDesocupados(@Header("Authorization")String token);
+
+        @GET("api/Maquinas_Agrarias/maquinasDesocupadasPorTarea ")
+        Call<List<Maquinas_Agrarias>> obtenerMaquinasDesocupadasPorTarea(
+                @Header("Authorization")String token,
+                @Query("id_tipo_tarea") int idTipoTarea);
     }
 }
