@@ -70,6 +70,30 @@ public class ApiClient {
         editor.remove("token"); // elimina solo la clave "token"
         editor.apply();
     }
+    public static void guardarObjeto(Context context, String key, Object objeto) {
+        SharedPreferences sp = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(objeto); // Convertimos objeto → JSON
+
+        editor.putString(key, json);
+        editor.apply();
+    }
+    public static <T> T leerObjeto(Context context, String key, Class<T> clase) {
+        SharedPreferences sp = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+
+        String json = sp.getString(key, null);
+        if (json == null) return null;
+
+        Gson gson = new Gson();
+        return gson.fromJson(json, clase); // JSON → objeto
+    }
+    public static void borrarObjeto(Context context, String key) {
+        SharedPreferences sp = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        sp.edit().remove(key).apply();
+    }
+
     public interface AgroTiliService{
         @FormUrlEncoded
         @POST("api/Empleados/login")

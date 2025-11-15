@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.principal.agrotiliapp.R;
 import com.principal.agrotiliapp.clases.Campos;
+import com.principal.agrotiliapp.request.ApiClient;
 
 import java.util.List;
 
@@ -41,9 +42,8 @@ public  class CamposAdapter extends RecyclerView.Adapter<CamposAdapter.CamposVie
          holder.tvNombreCampo.setText(c.getNombre_campo());
          holder.tvSuperficie.setText(c.getSuperficie()+"");
          holder.cardView.setOnClickListener(v ->{
-             Bundle bundle = new Bundle();
-             bundle.putSerializable("campo", c);
-             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.nav_tareas, bundle);
+             ApiClient.guardarObjeto(context,"campo",c);
+             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.nav_tareas);
          });
     }
 
