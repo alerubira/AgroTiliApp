@@ -82,5 +82,17 @@
         <action
             android:id="@+id/action_tareasFragment_to_crearTareaFragment"
             app:destination="@id/crearTareaFragment" />
+        <action
+            android:id="@+id/action_tareasFragment_to_tareaSeleccionadaFragment"
+            app:destination="@id/tareaSeleccionadaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tareaSeleccionadaFragment"
+        android:name="com.principal.agrotiliapp.ui.tareas.tareaSeleccionada.TareaSeleccionadaFragment"
+        android:label="fragment_tarea_seleccionada"
+        tools:layout="@layout/fragment_tarea_seleccionada" >
+        <action
+            android:id="@+id/action_tareaSeleccionadaFragment_to_tareasFragment"
+            app:destination="@id/tareasFragment" />
     </fragment>
 </navigation>

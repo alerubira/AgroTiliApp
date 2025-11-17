@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
+import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.clases.Tipos_Tareas;
 
 import java.util.List;
@@ -134,5 +135,23 @@ public class ApiClient {
         Call<List<Maquinas_Agrarias>> obtenerMaquinasDesocupadasPorTarea(
                 @Header("Authorization")String token,
                 @Query("id_tipo_tarea") int idTipoTarea);
+
+        @GET("api/Tareas ")
+        Call<List<Tareas>> obtenerTareas(
+                @Header("Authorization")String token);
+
+        @FormUrlEncoded
+        @PUT("api/Tareas/finalizarTarea")
+        Call<Void>finalizarTarea(@Header("Authorization")String token,
+                               @Field("idTarea")int idTarea,
+                               @Field("observaciones")String observaciones);
+        @FormUrlEncoded
+        @POST("api/Tareas/crearTarea")
+        Call<Void>crearTarea(@Header("Authorization")String token,
+                                 @Field("idTipoTarea")int idTipoTarea,
+                                 @Field("idCampo")int idCampo,
+                             @Field("idMaquinaAgraria")int idMaquinaagraria,
+                             @Field("idEmpleado")int idEmpleado
+                             );
     }
 }

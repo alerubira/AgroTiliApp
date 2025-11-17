@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvIdTarea"
+            android:id="@+id/tvIdTareaItemTarea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -61,7 +61,7 @@
             android:background="@drawable/editext_borde"
             android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvIdTarea" />
+            app:layout_constraintTop_toBottomOf="@+id/tvIdTareaItemTarea" />
 
         <TextView
             android:id="@+id/textView19"

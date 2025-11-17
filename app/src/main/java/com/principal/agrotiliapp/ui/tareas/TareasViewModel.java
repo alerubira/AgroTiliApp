@@ -10,8 +10,13 @@ import androidx.lifecycle.ViewModel;
 
 
 import com.principal.agrotiliapp.clases.Tareas;
+import com.principal.agrotiliapp.request.ApiClient;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TareasViewModel extends AndroidViewModel {
     private final MutableLiveData<String> mMensage = new MutableLiveData<>();
@@ -23,7 +28,27 @@ public class TareasViewModel extends AndroidViewModel {
     public LiveData<String> getMMensage(){
         return mMensage;
     }
-    public LiveData<List<Tareas>>getMEmpleados(){
+    public LiveData<List<Tareas>>getMTareas(){
         return mTareas;
+    }
+    public void obtenerTareas(){
+        String token = ApiClient.leerToken(getApplication());
+        ApiClient.AgroTiliService api = ApiClient.getApiAgroTili();
+        Call<List<Tareas>> llamada=api.obtenerTareas(token);
+        llamada.enqueue(new Callback<List<Tareas>>() {
+            @Override
+            public void onResponse(Call<List<Tareas>> call, Response<List<Tareas>> response) {
+                if(response.isSuccessful()){
+                    mTareas.postValue(response.body());
+                }else{
+                    mMensage.postValue("Error al buscar Tareas; "+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Tareas>> call, Throwable t) {
+                mMensage.postValue("Error en el servidor: "+t.getMessage());
+            }
+        });
     }
 }

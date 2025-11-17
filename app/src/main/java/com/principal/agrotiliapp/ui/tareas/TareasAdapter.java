@@ -60,7 +60,7 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.TareasView
             ApiClient.guardarObjeto(context,"tarea",t);
             Bundle bundle=new Bundle();
             bundle.putSerializable("tarea",t);
-            Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.crearTareaFragment,bundle);
+            Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.tareaSeleccionadaFragment,bundle);
         });
 
     }
@@ -78,7 +78,7 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.TareasView
         public TareasViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView=itemView.findViewById(R.id.cardTarea);
-            tvIdTarea=itemView.findViewById(R.id.tvIdTarea);
+            tvIdTarea=itemView.findViewById(R.id.tvIdTareaItemTarea);
             tvNombreCampoItemTarea=itemView.findViewById(R.id.tvNombreCampoItemTarea);
             tvTipoTareaItemTarea=itemView.findViewById(R.id.tvTipoTareaItemTarea);
             tvMaquinaAgrariaItemTarea=itemView.findViewById(R.id.tvMaquinaAgrariaItemTarea);
