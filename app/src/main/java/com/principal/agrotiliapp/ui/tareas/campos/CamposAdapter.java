@@ -43,7 +43,7 @@ public  class CamposAdapter extends RecyclerView.Adapter<CamposAdapter.CamposVie
          holder.tvSuperficie.setText(c.getSuperficie()+"");
          holder.cardView.setOnClickListener(v ->{
              ApiClient.guardarObjeto(context,"campo",c);
-             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.nav_tareas);
+             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.crearTareaFragment);
          });
     }
 

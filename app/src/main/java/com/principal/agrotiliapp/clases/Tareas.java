@@ -61,8 +61,9 @@ public class Tareas implements Serializable {
     private Campos campo;
     private Maquinas_Agrarias maquina_Agraria;
     private Empleados empleado;
+    private Tipos_Tareas tipo_tarea;
 
-    public Tareas(int id_tarea, int id_tipo_tarea, int id_maquina_agraria, int id_empleado, String fecha_inicio, String fecha_fin, boolean realizada, String observaciones, Campos campo, Maquinas_Agrarias maquina_Agraria, Empleados empleado) {
+    public Tareas(int id_tarea, int id_tipo_tarea, int id_maquina_agraria, int id_empleado, String fecha_inicio, String fecha_fin, boolean realizada, String observaciones, Campos campo, Maquinas_Agrarias maquina_Agraria, Empleados empleado,Tipos_Tareas tipo_tarea) {
         this.id_tarea = id_tarea;
         this.id_tipo_tarea = id_tipo_tarea;
         this.id_maquina_agraria = id_maquina_agraria;
@@ -74,6 +75,7 @@ public class Tareas implements Serializable {
         this.campo = campo;
         this.maquina_Agraria = maquina_Agraria;
         this.empleado = empleado;
+        this.tipo_tarea=tipo_tarea;
     }
 
     public int getId_tarea() {
@@ -162,5 +164,13 @@ public class Tareas implements Serializable {
 
     public void setEmpleado(Empleados empleado) {
         this.empleado = empleado;
+    }
+
+    public Tipos_Tareas getTipo_tarea() {
+        return tipo_tarea;
+    }
+
+    public void setTipo_tarea(Tipos_Tareas tipo_tarea) {
+        this.tipo_tarea = tipo_tarea;
     }
 }

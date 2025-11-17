@@ -46,7 +46,7 @@ public class EmpleadosDesocupadosAdapter extends RecyclerView.Adapter<EmpleadosD
          holder.tvRol.setText(e.getNombre_role());
          holder.cardView.setOnClickListener(v->{
              ApiClient.guardarObjeto(context,"empleado",e);
-             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.nav_tareas);
+             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.crearTareaFragment);
          });
     }
 

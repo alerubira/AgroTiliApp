@@ -16,16 +16,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_tareas"
-        android:name="com.principal.agrotiliapp.ui.tareas.TareasFragment"
-        android:label="@string/tareas"
-        tools:layout="@layout/fragment_tareas" >
-        <action
-            android:id="@+id/action_nav_tareas_to_camposFragment"
-            app:destination="@id/camposFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/nav_logout"
         android:name="com.principal.agrotiliapp.ui.logouts.LogoutsFragment"
         android:label="@string/logout"
@@ -45,7 +35,52 @@
         android:label="fragment_campos"
         tools:layout="@layout/fragment_campos" >
         <action
-            android:id="@+id/action_camposFragment_to_nav_tareas"
-            app:destination="@id/nav_tareas" />
+            android:id="@+id/action_camposFragment_to_crearTareaFragment"
+            app:destination="@id/crearTareaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/empleadosDesocupadosFragment"
+        android:name="com.principal.agrotiliapp.ui.tareas.empleadosDesocupados.EmpleadosDesocupadosFragment"
+        android:label="fragment_empleados_desocupados"
+        tools:layout="@layout/fragment_empleados_desocupados" >
+        <action
+            android:id="@+id/action_empleadosDesocupadosFragment_to_crearTareaFragment"
+            app:destination="@id/crearTareaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/maquinasAgrariasFragment"
+        android:name="com.principal.agrotiliapp.ui.tareas.maquinasAgrarias.MaquinasAgrariasFragment"
+        android:label="fragment_maquinas_agrarias"
+        tools:layout="@layout/fragment_maquinas_agrarias" >
+        <action
+            android:id="@+id/action_maquinasAgrariasFragment_to_crearTareaFragment"
+            app:destination="@id/crearTareaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearTareaFragment"
+        android:name="com.principal.agrotiliapp.ui.tareas.crearTarea.CrearTareaFragment"
+        android:label="fragment_crear_tarea"
+        tools:layout="@layout/fragment_crear_tarea" >
+        <action
+            android:id="@+id/action_crearTareaFragment_to_tareasFragment"
+            app:destination="@id/tareasFragment" />
+        <action
+            android:id="@+id/action_crearTareaFragment_to_camposFragment"
+            app:destination="@id/camposFragment" />
+        <action
+            android:id="@+id/action_crearTareaFragment_to_maquinasAgrariasFragment"
+            app:destination="@id/maquinasAgrariasFragment" />
+        <action
+            android:id="@+id/action_crearTareaFragment_to_empleadosDesocupadosFragment"
+            app:destination="@id/empleadosDesocupadosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tareasFragment"
+        android:name="com.principal.agrotiliapp.ui.tareas.TareasFragment"
+        android:label="fragment_tareas"
+        tools:layout="@layout/fragment_tareas" >
+        <action
+            android:id="@+id/action_tareasFragment_to_crearTareaFragment"
+            app:destination="@id/crearTareaFragment" />
     </fragment>
 </navigation>
