@@ -41,7 +41,7 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.TareasView
         Tareas t=listaTareas.get(position);
         holder.tvIdTarea.setText(t.getId_tarea()+"");
         holder.tvNombreCampoItemTarea.setText(t.getCampo().getNombre_campo());
-        holder.tvTipoTareaItemTarea.setText(t.getTipo_tarea().getNombre_tipo_tarea());
+        holder.tvTipoTareaItemTarea.setText(t.getTipo_Tarea().getNombre_tipo_tarea());
         holder.tvMaquinaAgrariaItemTarea.setText(t.getMaquina_Agraria().getPatente());
         String operario=t.getEmpleado().getNombre()+"  "+ t.getEmpleado().getApellido();
         holder.tvOperarioItemTarea.setText(operario);

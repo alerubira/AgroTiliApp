@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModel;
 import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.clases.Tipos_Tareas;
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,7 +35,7 @@ public class TareaSeleccionadaViewModel extends AndroidViewModel {
     }
     public void recibirBundle(Bundle bundle){
         if (bundle != null) {
-            Tareas tarea = (Tareas) bundle.getSerializable("tareaarea");
+            Tareas tarea = (Tareas) bundle.getSerializable("tarea");
             mTarea.setValue(tarea);
 
         }else{
@@ -56,16 +58,16 @@ public class TareaSeleccionadaViewModel extends AndroidViewModel {
         llamada.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     mMensage.postValue("La tarea fue finalizada con exito");
-                }else{
-                    mMensage.postValue("Error al finalizar la tarea: "+response.message());
+                } else {
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                mMensage.postValue("Error en el servidor: "+t.getMessage());
+                    mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }

@@ -9,7 +9,7 @@
             android:icon="@drawable/person_4_24dp_1f1f1f_fill0_wght400_grad0_opsz24"
             android:title="@string/perfil" />
         <item
-            android:id="@+id/nav_tareas"
+            android:id="@+id/tareasFragment"
             android:icon="@drawable/list_alt_24dp_1f1f1f_fill0_wght400_grad0_opsz24"
             android:title="@string/tareas" />
         <item

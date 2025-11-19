@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.tareas.crearTarea.CrearTareaFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@drawable/fondo"
+        app:cardBackgroundColor="#88121449 "
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:contentPadding="10dp">
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="409dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="38dp"
+            android:textSize="16sp"
+            android:background="@drawable/editext_borde"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCampoCrearTarea"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Agregue un Camo"
+            android:layout_marginTop="38dp"
+            android:textSize="16sp"
+            android:background="@drawable/editext_borde"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+        <TextView
+            android:id="@+id/tvMaquinaCrearTarea"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Agregue una Maquina"
+            android:layout_marginTop="38dp"
+            android:textSize="16sp"
+            android:background="@drawable/editext_borde"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCampoCrearTarea" />
+
+        <TextView
+            android:id="@+id/tvEmpleadoCrearTarea"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Agregue un Operario"
+            android:layout_marginTop="38dp"
+            android:textSize="16sp"
+            android:background="@drawable/editext_borde"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMaquinaCrearTarea" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Crear tarea"
+            android:layout_marginTop="38dp"
+            android:textSize="16sp"
+            android:background="@drawable/editext_borde"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmpleadoCrearTarea" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

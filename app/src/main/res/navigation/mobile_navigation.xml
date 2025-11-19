@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/camposFragment"
         android:name="com.principal.agrotiliapp.ui.tareas.campos.CamposFragment"
-        android:label="fragment_campos"
+        android:label="@string/campos"
         tools:layout="@layout/fragment_campos" >
         <action
             android:id="@+id/action_camposFragment_to_crearTareaFragment"
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/empleadosDesocupadosFragment"
         android:name="com.principal.agrotiliapp.ui.tareas.empleadosDesocupados.EmpleadosDesocupadosFragment"
-        android:label="fragment_empleados_desocupados"
+        android:label="Empleados Desocupados"
         tools:layout="@layout/fragment_empleados_desocupados" >
         <action
             android:id="@+id/action_empleadosDesocupadosFragment_to_crearTareaFragment"
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/maquinasAgrariasFragment"
         android:name="com.principal.agrotiliapp.ui.tareas.maquinasAgrarias.MaquinasAgrariasFragment"
-        android:label="fragment_maquinas_agrarias"
+        android:label="Maquinas Agrarias"
         tools:layout="@layout/fragment_maquinas_agrarias" >
         <action
             android:id="@+id/action_maquinasAgrariasFragment_to_crearTareaFragment"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/crearTareaFragment"
         android:name="com.principal.agrotiliapp.ui.tareas.crearTarea.CrearTareaFragment"
-        android:label="fragment_crear_tarea"
+        android:label="Crear Tarea"
         tools:layout="@layout/fragment_crear_tarea" >
         <action
             android:id="@+id/action_crearTareaFragment_to_tareasFragment"
@@ -77,7 +77,7 @@
     <fragment
         android:id="@+id/tareasFragment"
         android:name="com.principal.agrotiliapp.ui.tareas.TareasFragment"
-        android:label="fragment_tareas"
+        android:label="Tareas"
         tools:layout="@layout/fragment_tareas" >
         <action
             android:id="@+id/action_tareasFragment_to_crearTareaFragment"
@@ -89,7 +89,7 @@
     <fragment
         android:id="@+id/tareaSeleccionadaFragment"
         android:name="com.principal.agrotiliapp.ui.tareas.tareaSeleccionada.TareaSeleccionadaFragment"
-        android:label="fragment_tarea_seleccionada"
+        android:label="Tarea Seleccionada"
         tools:layout="@layout/fragment_tarea_seleccionada" >
         <action
             android:id="@+id/action_tareaSeleccionadaFragment_to_tareasFragment"
