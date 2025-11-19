@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import java.util.List;
 
@@ -38,13 +39,13 @@ public class CamposViewModel extends AndroidViewModel {
                if(response.isSuccessful()){
                    mCampos.postValue(response.body());
                }else{
-                   mMensage.postValue("Error al buscar Campos; "+response.message());
+                   mMensage.postValue(ApiErrorHandler.parseError(response));
                }
            }
 
            @Override
            public void onFailure(Call<List<Campos>> call, Throwable t) {
-                  mMensage.postValue("Error en el servidor: "+t.getMessage());
+                  mMensage.postValue(ApiErrorHandler.defaultFailure(t));
            }
        });
     }

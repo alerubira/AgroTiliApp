@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import java.lang.invoke.MutableCallSite;
 
@@ -53,13 +54,13 @@ public class CambiarClaveViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mExito.postValue("La clave fue cambiada con exito");
                 }else{
-                    mMensage.postValue(("Error al cambiar la clave: "+response.message()));
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-               mMensage.postValue("Error en el servidor: "+t.getMessage());
+               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }

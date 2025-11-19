@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.principal.agrotiliapp.R;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,13 +57,13 @@ public class PerfilViewModel extends AndroidViewModel {
                      empleado=response.body();
                      mEmpleado.postValue(empleado);
                 }else{
-                    mMensage.postValue("Error al buscar el Empleado: "+response.message());
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Empleados> call, Throwable t) {
-               mMensage.postValue("Error en el servidor: "+t.getMessage());
+               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
@@ -95,13 +96,13 @@ public class PerfilViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mModificado.postValue("El perfil del empleado fue modificado con exito");
                 }else{
-                    mMensage.postValue("Error al modificar el perfil del empleado:"+response.message());
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Empleados> call, Throwable t) {
-                     mMensage.postValue("Erroe en el servidor: "+t.getMessage());
+                     mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }

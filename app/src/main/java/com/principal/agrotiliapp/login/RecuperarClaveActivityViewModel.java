@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,13 +43,13 @@ public class RecuperarClaveActivityViewModel extends AndroidViewModel {
                 if (response.isSuccessful()) {
                     mExito.setValue("rr");
                 }else{
-                    mMensage.postValue("Error al resetear la clave: "+response.message());
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-               mMensage.postValue("Error del servidor: "+t.getMessage());
+               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }

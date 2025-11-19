@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import java.util.List;
 
@@ -41,13 +42,13 @@ public class TareasViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mTareas.postValue(response.body());
                 }else{
-                    mMensage.postValue("Error al buscar Tareas; "+response.message());
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Tareas>> call, Throwable t) {
-                mMensage.postValue("Error en el servidor: "+t.getMessage());
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }

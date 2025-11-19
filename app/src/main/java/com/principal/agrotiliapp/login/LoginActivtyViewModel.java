@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,13 +60,13 @@ public class LoginActivtyViewModel extends AndroidViewModel {
                 ApiClient.guardarToken(context, token);
                 mLogueado.postValue("logueado");
                 } else{
-                    mNoLogueado.postValue("Error al loguearse: "+ response.message());
+                    mNoLogueado.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                mNoLogueado.postValue("Eeror interno del servidor: "+t.getMessage());
+                mNoLogueado.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
@@ -86,13 +87,13 @@ public class LoginActivtyViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                      mReseteo.setValue(email);
                 }else{
-                    mNoLogueado.postValue("Error al enviar el mail: "+response.message());
+                    mNoLogueado.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                mNoLogueado.postValue("Error del servidor: "+t.getMessage());
+                mNoLogueado.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }

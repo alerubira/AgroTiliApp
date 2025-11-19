@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import java.util.List;
 
@@ -41,13 +42,13 @@ public class EmpleadosDesocupadosViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mEmpleados.postValue(response.body());
                 }else{
-                    mMensage.postValue("Error al buscar Empleados; "+response.message());
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Empleados>> call, Throwable t) {
-                mMensage.postValue("Error en el servidor: "+t.getMessage());
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
