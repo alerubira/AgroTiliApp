@@ -1,6 +1,7 @@
 package com.principal.agrotiliapp.ui.tareas.crearTarea;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,7 +13,9 @@ import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
 import com.principal.agrotiliapp.clases.Tipos_Tareas;
 import com.principal.agrotiliapp.request.ApiClient;
+import com.principal.agrotiliapp.request.ApiErrorHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,9 +28,12 @@ public class CrearTareaViewModel extends AndroidViewModel {
     private MutableLiveData<Campos> mCampoSelecionado =new MutableLiveData<>();
     private MutableLiveData<Maquinas_Agrarias> mMaquinaSeleccionada =new MutableLiveData<>();
     private MutableLiveData<Empleados> mEmpleadoSeleccionado =new MutableLiveData<>();
-    private Tipos_Tareas tipoTareasSeleccionada;
+    private MutableLiveData<Boolean>mHayTarea=new MutableLiveData<>();
+    private MutableLiveData<Tipos_Tareas> mTipoTareasSeleccionada=new MutableLiveData<>();
+    private Context context;
     public CrearTareaViewModel(@NonNull Application application) {
         super(application);
+        context=getApplication();
     }
     public LiveData<String>getMMensage(){
         return mMensage;
@@ -45,13 +51,13 @@ public class CrearTareaViewModel extends AndroidViewModel {
         return mEmpleadoSeleccionado;
     }
 
-    public Tipos_Tareas getTipoTareasSeleccionada() {
-        return tipoTareasSeleccionada;
+    public LiveData<Tipos_Tareas> getMTipoTareasSeleccionada() {
+        return mTipoTareasSeleccionada;
+    }
+    public LiveData<Boolean>getMHayTarea(){
+        return mHayTarea;
     }
 
-    public void setTipoTareasSeleccionada(Tipos_Tareas tipoTareasSeleccionada) {
-        this.tipoTareasSeleccionada = tipoTareasSeleccionada;
-    }
 
     public void obtenerTiposTareas(){
         String token = ApiClient.leerToken(getApplication());
@@ -61,16 +67,75 @@ public class CrearTareaViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<Tipos_Tareas>> call, Response<List<Tipos_Tareas>> response) {
                 if(response.isSuccessful()){
+                    List<Tipos_Tareas>lista=new ArrayList<>();
+                    Tipos_Tareas tarea=new Tipos_Tareas(0,"Seleccione un tipo de tarea");
+                    lista.add(tarea);
+                    lista.addAll(response.body());
                     mTiposTareas.postValue(response.body());
                 }else{
-                    mMensage.postValue("Error al buscar Tipos de Tareas; "+response.message());
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Tipos_Tareas>> call, Throwable t) {
-                mMensage.postValue("Error en el servidor: "+t.getMessage());
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
+    }
+    public void llenartv(){
+        Empleados empleado= ApiClient.leerObjeto(context,"empleado",Empleados.class);
+        if(empleado!=null){
+            mEmpleadoSeleccionado.setValue(empleado);
+        }
+        Campos campo= ApiClient.leerObjeto(context,"campo",Campos.class);
+        if(campo==null){
+          mCampoSelecionado.setValue(campo);
+        }
+        Maquinas_Agrarias maquina= ApiClient.leerObjeto(context,"maquinaAgraria",Maquinas_Agrarias.class);
+        if(maquina==null){
+           mMaquinaSeleccionada.setValue(maquina);
+        }
+
+    }
+    public void cooroborarTipoTarea(){
+
+        if (mTipoTareasSeleccionada != null && mTipoTareasSeleccionada.getValue().getId_tipo_tarea() > 0) {
+            mHayTarea.setValue(true);
+        } else {
+           setearMHayTarea();
+            mMensage.setValue("Debe seleccionar el tipo de tarea para buscar la Maquina");
+        }
+    }
+    public void setearMHayTarea(){
+        mHayTarea.setValue(false);
+    }
+    public void setearMTipoTareaSeleccionada(Tipos_Tareas tipo){
+        mTipoTareasSeleccionada.setValue(tipo);
+    }
+    public void cooroborarDatosTarea(){
+        Empleados empleado= mEmpleadoSeleccionado.getValue();
+        if(empleado==null){
+            mMensage.setValue("Debe seleccionar un Empleado para la tarea");
+            return;
+        }
+        Campos campo= mCampoSelecionado.getValue();
+        if(campo==null){
+            mMensage.setValue("debe seleccionar un Campo para la tarea");
+            return;
+        }
+        Maquinas_Agrarias maquina= mMaquinaSeleccionada.getValue();
+        if(maquina==null){
+            mMensage.setValue("Debe seleccionar una Maquina para la tarea");
+            return;
+        }
+        if(maquina.getId_tipo_tarea()!=mTipoTareasSeleccionada.getValue().getId_tipo_tarea()){
+            mMensage.setValue("La maquina seleccionada no es aptata para la Tarea");
+            return;
+        }
+        crearTara(mTipoTareasSeleccionada.getValue().getId_tipo_tarea(),maquina.getId_maquina_agraria(), empleado.getId_empleado(), campo.getId_campo());
+    }
+    private void crearTara(int idTipoTraea,int idMaquina,int idEmpleado,int idCampo){
+       mMensage.setValue("venimos bien");
     }
 }

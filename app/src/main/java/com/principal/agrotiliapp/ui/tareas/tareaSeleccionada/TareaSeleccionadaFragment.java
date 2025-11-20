@@ -50,7 +50,7 @@ public class TareaSeleccionadaFragment extends Fragment {
         mViewModel.getMTarea().observe(getViewLifecycleOwner(), new Observer<Tareas>() {
             @Override
             public void onChanged(Tareas tarea) {
-                binding.tvIdTarea.setText("@string/codigo_interno"+" :"+tarea.getId_tarea());
+                binding.tvIdTarea.setText(R.string.codigo_interno+" :"+tarea.getId_tarea());
                 binding.tvCampo.setText("Nombre del Campo: "+tarea.getCampo().getNombre_campo());
                 binding.tvOperario.setText("Operario: "+tarea.getEmpleado().getNombre()+" "+tarea.getEmpleado().getApellido());
                 binding.tvMaquina.setText("Maquina: "+tarea.getMaquina_Agraria().getPatente());

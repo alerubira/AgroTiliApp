@@ -19,6 +19,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.clases.Campos;
+import com.principal.agrotiliapp.clases.Empleados;
+import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
 import com.principal.agrotiliapp.clases.Tipos_Tareas;
 import com.principal.agrotiliapp.databinding.FragmentCrearTareaBinding;
 import com.principal.agrotiliapp.ui.tareas.TareasFragment;
@@ -45,6 +48,7 @@ public class CrearTareaFragment extends Fragment {
                 abrirDialogo(s);
             }
         });
+        mViewModel.obtenerTiposTareas();
         mViewModel.getMTiposTareas().observe(getViewLifecycleOwner(), new Observer<List<Tipos_Tareas>>() {
             @Override
             public void onChanged(List<Tipos_Tareas> tiposTareas) {
@@ -58,24 +62,80 @@ public class CrearTareaFragment extends Fragment {
                 binding.spinner.setAdapter(adapter);
             }
         });
-        mViewModel.obtenerTiposTareas();
+
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 Tipos_Tareas seleccion = (Tipos_Tareas) parent.getItemAtPosition(position);
 
-                mViewModel.setTipoTareasSeleccionada(seleccion);
+                mViewModel.setearMTipoTareaSeleccionada(seleccion);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+        mViewModel.getMTipoTareasSeleccionada().observe(getViewLifecycleOwner(), new Observer<Tipos_Tareas>() {
+            @Override
+            public void onChanged(Tipos_Tareas tiposTareas) {
+                //Bloquear el Spinner
+                binding.spinner.setEnabled(false);
+
+                //Asegurar que muestre la selección actual
+                ArrayAdapter adapter = (ArrayAdapter) binding.spinner.getAdapter();
+
+                int position = adapter.getPosition(tiposTareas);
+                binding.spinner.setSelection(position);
+            }
+            });
+
         binding.tvCampoCrearTarea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(CrearTareaFragment.this)
                         .navigate(R.id.camposFragment);
+            }
+        });
+        binding.tvEmpleadoCrearTarea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(CrearTareaFragment.this)
+                        .navigate(R.id.empleadosDesocupadosFragment);
+            }
+        });
+        binding.tvMaquinaCrearTarea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 mViewModel.cooroborarTipoTarea();
+            }
+        });
+        mViewModel.getMHayTarea().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    mViewModel.setearMHayTarea();
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("tipoTarea",mViewModel.getMTipoTareasSeleccionada().getValue());
+                    NavHostFragment.findNavController(CrearTareaFragment.this)
+                            .navigate(R.id.maquinasAgrariasFragment,bundle);
+                }
+            }
+        });
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Crear Tarea")
+                        .setMessage("Seguro de crear Tarea")
+                        .setNegativeButton("No", (dialog, which) -> {
+                            // Solo cierra el diálogo
+                            dialog.dismiss();
+                        })
+                        .setPositiveButton("Si",(dialog, which) -> {
+                            mViewModel.cooroborarDatosTarea();
+                        })
+                        .show();
+
             }
         });
 
@@ -101,4 +161,22 @@ public class CrearTareaFragment extends Fragment {
                 .show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.llenartv();
+        Campos campo=mViewModel.getMCampoSeleccionado().getValue();
+        Empleados empleado=mViewModel.getMEmpleadoseleccionado().getValue();
+        Maquinas_Agrarias maquina=mViewModel.getMMaquinaSeleccionada().getValue();
+        if(campo!=null){
+            binding.tvCampoCrearTarea.setText(campo.getNombre_campo());
+        }
+        if(empleado!=null){
+            binding.tvEmpleadoCrearTarea.setText(empleado.getApellido());
+        }
+        if(maquina!=null){
+            binding.tvMaquinaCrearTarea.setText(maquina.getPatente());
+        }
+
+    }
 }

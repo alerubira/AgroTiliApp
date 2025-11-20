@@ -26,4 +26,8 @@ public class Tipos_Tareas implements Serializable {
     public void setNombre_tipo_tarea(String nombre_tipo_tarea) {
         this.nombre_tipo_tarea = nombre_tipo_tarea;
     }
+    @Override
+    public String toString() {
+        return nombre_tipo_tarea != null ? nombre_tipo_tarea : "";
+    }
 }

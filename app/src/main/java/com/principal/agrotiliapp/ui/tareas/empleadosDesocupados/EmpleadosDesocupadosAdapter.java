@@ -42,7 +42,7 @@ public class EmpleadosDesocupadosAdapter extends RecyclerView.Adapter<EmpleadosD
          holder.tvIdEmpleado.setText(e.getId_empleado()+"");
          holder.tvApellidoEmpleado.setText(e.getApellido());
          holder.tvNombreEmpleado.setText(e.getNombre());
-         holder.tvFechaIngreso.setText(e.getFecha_egreso());
+         holder.tvFechaIngreso.setText(e.getFecha_ingreso());
          holder.tvRol.setText(e.getNombre_role());
          holder.cardView.setOnClickListener(v->{
              ApiClient.guardarObjeto(context,"empleado",e);
