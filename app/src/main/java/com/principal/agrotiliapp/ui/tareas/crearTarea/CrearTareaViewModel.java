@@ -71,7 +71,7 @@ public class CrearTareaViewModel extends AndroidViewModel {
                     Tipos_Tareas tarea=new Tipos_Tareas(0,"Seleccione un tipo de tarea");
                     lista.add(tarea);
                     lista.addAll(response.body());
-                    mTiposTareas.postValue(response.body());
+                    mTiposTareas.postValue(lista);
                 }else{
                     mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
@@ -88,14 +88,14 @@ public class CrearTareaViewModel extends AndroidViewModel {
         if(empleado!=null){
             mEmpleadoSeleccionado.setValue(empleado);
         }
-        Campos campo= ApiClient.leerObjeto(context,"campo",Campos.class);
+       /* Campos campo= ApiClient.leerObjeto(context,"campo",Campos.class);
         if(campo==null){
           mCampoSelecionado.setValue(campo);
         }
         Maquinas_Agrarias maquina= ApiClient.leerObjeto(context,"maquinaAgraria",Maquinas_Agrarias.class);
         if(maquina==null){
            mMaquinaSeleccionada.setValue(maquina);
-        }
+        }*/
 
     }
     public void cooroborarTipoTarea(){
@@ -103,7 +103,7 @@ public class CrearTareaViewModel extends AndroidViewModel {
         if (mTipoTareasSeleccionada != null && mTipoTareasSeleccionada.getValue().getId_tipo_tarea() > 0) {
             mHayTarea.setValue(true);
         } else {
-           setearMHayTarea();
+
             mMensage.setValue("Debe seleccionar el tipo de tarea para buscar la Maquina");
         }
     }
@@ -137,5 +137,12 @@ public class CrearTareaViewModel extends AndroidViewModel {
     }
     private void crearTara(int idTipoTraea,int idMaquina,int idEmpleado,int idCampo){
        mMensage.setValue("venimos bien");
+       setearMutables();
+    }
+    private void setearMutables(){
+        mTipoTareasSeleccionada.postValue(null);
+        mMaquinaSeleccionada.postValue(null);
+        mCampoSelecionado.postValue(null);
+        mEmpleadoSeleccionado.postValue(null);
     }
 }
