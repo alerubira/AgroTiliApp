@@ -58,7 +58,11 @@ public class CrearTareaViewModel extends AndroidViewModel {
         return mHayTarea;
     }
 
-
+    public void limpiarSharedPreference(){
+        ApiClient.borrarObjeto(context,"campo");
+        ApiClient.borrarObjeto(context,"empleado");
+        ApiClient.borrarObjeto(context,"maquinaAgraria");
+    }
     public void obtenerTiposTareas(){
         String token = ApiClient.leerToken(getApplication());
         ApiClient.AgroTiliService api = ApiClient.getApiAgroTili();
@@ -83,27 +87,28 @@ public class CrearTareaViewModel extends AndroidViewModel {
             }
         });
     }
-    public void llenartv(){
+    public void obtenerObjetos(){
+        Campos campo= ApiClient.leerObjeto(context,"campo",Campos.class);
+        if(campo!=null){
+            mCampoSelecionado.setValue(campo);
+        }
         Empleados empleado= ApiClient.leerObjeto(context,"empleado",Empleados.class);
         if(empleado!=null){
             mEmpleadoSeleccionado.setValue(empleado);
         }
-       /* Campos campo= ApiClient.leerObjeto(context,"campo",Campos.class);
-        if(campo==null){
-          mCampoSelecionado.setValue(campo);
-        }
+
         Maquinas_Agrarias maquina= ApiClient.leerObjeto(context,"maquinaAgraria",Maquinas_Agrarias.class);
-        if(maquina==null){
+        if(maquina!=null){
            mMaquinaSeleccionada.setValue(maquina);
-        }*/
+
+        }
 
     }
     public void cooroborarTipoTarea(){
 
-        if (mTipoTareasSeleccionada != null && mTipoTareasSeleccionada.getValue().getId_tipo_tarea() > 0) {
+        if (mTipoTareasSeleccionada.getValue() != null && mTipoTareasSeleccionada.getValue().getId_tipo_tarea() > 0) {
             mHayTarea.setValue(true);
-        } else {
-
+        }else{
             mMensage.setValue("Debe seleccionar el tipo de tarea para buscar la Maquina");
         }
     }
@@ -137,6 +142,7 @@ public class CrearTareaViewModel extends AndroidViewModel {
     }
     private void crearTara(int idTipoTraea,int idMaquina,int idEmpleado,int idCampo){
        mMensage.setValue("venimos bien");
+       limpiarSharedPreference();
        setearMutables();
     }
     private void setearMutables(){

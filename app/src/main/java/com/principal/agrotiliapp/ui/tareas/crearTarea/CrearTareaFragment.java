@@ -49,7 +49,7 @@ public class CrearTareaFragment extends Fragment {
 
         binding=FragmentCrearTareaBinding.inflate(inflater,container,false);
         View root=binding.getRoot();
-
+       // mViewModel.limpiarSharedPreference();
 
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -98,7 +98,7 @@ public class CrearTareaFragment extends Fragment {
             }
             });
 
-       /* binding.tvCampoCrearTarea.setOnClickListener(new View.OnClickListener() {
+       binding.tvCampoCrearTarea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(CrearTareaFragment.this)
@@ -111,6 +111,7 @@ public class CrearTareaFragment extends Fragment {
                 binding.tvCampoCrearTarea.setText("Campo seleccionado: "+ campos.getNombre_campo());
             }
         });
+
         binding.tvEmpleadoCrearTarea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +122,7 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMEmpleadoseleccionado().observe(getViewLifecycleOwner(), new Observer<Empleados>() {
             @Override
             public void onChanged(Empleados empleados) {
-                binding.tvEmpleadoCrearTarea.setText(empleados.getNombre()+" "+empleados.getApellido());
+                binding.tvEmpleadoCrearTarea.setText("Operario a cargo de la Tarea: "+empleados.getNombre()+" "+empleados.getApellido());
             }
         });
         binding.tvMaquinaCrearTarea.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +148,7 @@ public class CrearTareaFragment extends Fragment {
             public void onChanged(Maquinas_Agrarias maquinasAgrarias) {
                 binding.tvMaquinaCrearTarea.setText("Maquina seleccionada: "+maquinasAgrarias.getPatente());
             }
-        });*/
+        });
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +187,6 @@ public class CrearTareaFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       // mViewModel.llenartv();
+        mViewModel.obtenerObjetos();
     }
 }
