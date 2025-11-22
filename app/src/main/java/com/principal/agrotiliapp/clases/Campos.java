@@ -30,6 +30,9 @@ public class Campos implements Serializable {
         this.activo = activo;
     }
 
+    public Campos() {
+    }
+
     public int getId_campo() {
         return id_campo;
     }

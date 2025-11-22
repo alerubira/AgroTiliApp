@@ -30,6 +30,9 @@ public class Maquinas_Agrarias implements Serializable {
         this.tipos_Tareas = tipos_Tareas;
     }
 
+    public Maquinas_Agrarias() {
+    }
+
     public int getId_maquina_agraria() {
         return id_maquina_agraria;
     }

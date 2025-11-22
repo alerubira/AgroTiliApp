@@ -52,9 +52,9 @@ public class TareasAdapter extends RecyclerView.Adapter<TareasAdapter.TareasView
             holder.tvFechaFinItemTarea.setText(t.getFecha_fin());
         }
         if(t.getObservaciones()==null){
-            holder.tvObservacionItemTarea.setText("No contiene");
+            holder.tvObservacionItemTarea.setText("No contiene Observaciones");
         }else{
-            holder.tvObservacionItemTarea.setText(t.getObservaciones());
+            holder.tvObservacionItemTarea.setText("Observaciones: "+ t.getObservaciones());
         }
         holder.cardView.setOnClickListener(v->{
             ApiClient.guardarObjeto(context,"tarea",t);

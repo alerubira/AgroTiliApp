@@ -20,4 +20,7 @@
     <string name="cambiar_clave">Cambiar Clave</string>
     <string name="codigo_interno">codigo interno</string>
     <string name="campos">Campos</string>
+    <string name="seleccione_un_campo">Seleccione un Campo</string>
+    <string name="seleccione_una_maquina">Seleccione una Maquina</string>
+    <string name="seleccione_un_operario">Seleccione un Operario</string>
 </resources>

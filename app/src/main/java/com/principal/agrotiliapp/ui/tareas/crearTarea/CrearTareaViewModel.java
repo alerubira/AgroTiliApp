@@ -115,23 +115,30 @@ public class CrearTareaViewModel extends AndroidViewModel {
     public void setearMHayTarea(){
         mHayTarea.setValue(false);
     }
+    public void setearMMensage(){
+        mMensage.setValue("");
+    }
     public void setearMTipoTareaSeleccionada(Tipos_Tareas tipo){
         mTipoTareasSeleccionada.setValue(tipo);
     }
     public void cooroborarDatosTarea(){
         Empleados empleado= mEmpleadoSeleccionado.getValue();
-        if(empleado==null){
+        if(empleado.getApellido()==null){
             mMensage.setValue("Debe seleccionar un Empleado para la tarea");
             return;
         }
         Campos campo= mCampoSelecionado.getValue();
-        if(campo==null){
+        if(campo.getNombre_campo()==null){
             mMensage.setValue("debe seleccionar un Campo para la tarea");
             return;
         }
         Maquinas_Agrarias maquina= mMaquinaSeleccionada.getValue();
-        if(maquina==null){
+        if(maquina.getPatente()==null){
             mMensage.setValue("Debe seleccionar una Maquina para la tarea");
+            return;
+        }
+        if(mTipoTareasSeleccionada.getValue()==null){
+            mMensage.setValue("Debe seleccionar un tipo de Tatrea");
             return;
         }
         if(maquina.getId_tipo_tarea()!=mTipoTareasSeleccionada.getValue().getId_tipo_tarea()){
@@ -141,14 +148,31 @@ public class CrearTareaViewModel extends AndroidViewModel {
         crearTara(mTipoTareasSeleccionada.getValue().getId_tipo_tarea(),maquina.getId_maquina_agraria(), empleado.getId_empleado(), campo.getId_campo());
     }
     private void crearTara(int idTipoTraea,int idMaquina,int idEmpleado,int idCampo){
-       mMensage.setValue("venimos bien");
+        String token = ApiClient.leerToken(getApplication());
+        ApiClient.AgroTiliService api = ApiClient.getApiAgroTili();
+        Call<Void>llamada=api.crearTarea(token,idTipoTraea,idCampo,idMaquina,idEmpleado);
+        llamada.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    mMensage.postValue("Tarea Generada con exito");
+                }else{
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+            }
+        });
        limpiarSharedPreference();
        setearMutables();
     }
     private void setearMutables(){
-        mTipoTareasSeleccionada.postValue(null);
-        mMaquinaSeleccionada.postValue(null);
-        mCampoSelecionado.postValue(null);
-        mEmpleadoSeleccionado.postValue(null);
+        mTipoTareasSeleccionada.setValue(new Tipos_Tareas());
+        mMaquinaSeleccionada.setValue(new Maquinas_Agrarias());
+        mCampoSelecionado.setValue(new Campos());
+        mEmpleadoSeleccionado.setValue(new Empleados());
     }
 }

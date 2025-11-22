@@ -54,7 +54,11 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                abrirDialogo(s);
+                if(!s.isEmpty()){
+                    abrirDialogo(s);
+                    mViewModel.setearMMensage();
+                }
+
             }
         });
 
@@ -92,9 +96,11 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMTipoTareasSeleccionada().observe(getViewLifecycleOwner(), new Observer<Tipos_Tareas>() {
             @Override
             public void onChanged(Tipos_Tareas tiposTareas) {
-
-               binding.tvTareaCrearTarea.setText("Tipo Tarea Seleccionada: "+tiposTareas.getNombre_tipo_tarea());
-
+                if(tiposTareas.getId_tipo_tarea()>0){
+                    binding.tvTareaCrearTarea.setText("Tipo Tarea Seleccionada: "+tiposTareas.getNombre_tipo_tarea());
+                }else{
+                    binding.tvTareaCrearTarea.setText("");
+                }
             }
             });
 
@@ -108,7 +114,11 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMCampoSeleccionado().observe(getViewLifecycleOwner(), new Observer<Campos>() {
             @Override
             public void onChanged(Campos campos) {
-                binding.tvCampoCrearTarea.setText("Campo seleccionado: "+ campos.getNombre_campo());
+                if(campos.getNombre_campo()==null){
+                    binding.tvCampoCrearTarea.setText(getString(R.string.seleccione_un_campo));
+                }else{
+                    binding.tvCampoCrearTarea.setText("Campo seleccionado: "+ campos.getNombre_campo());
+                }
             }
         });
 
@@ -122,7 +132,12 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMEmpleadoseleccionado().observe(getViewLifecycleOwner(), new Observer<Empleados>() {
             @Override
             public void onChanged(Empleados empleados) {
-                binding.tvEmpleadoCrearTarea.setText("Operario a cargo de la Tarea: "+empleados.getNombre()+" "+empleados.getApellido());
+                if(empleados.getApellido()==null){
+                    binding.tvEmpleadoCrearTarea.setText(getString(R.string.seleccione_un_operario));
+                }else{
+                    binding.tvEmpleadoCrearTarea.setText("Operario a cargo de la Tarea: "+empleados.getNombre()+" "+empleados.getApellido());
+                }
+
             }
         });
         binding.tvMaquinaCrearTarea.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +161,12 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMMaquinaSeleccionada().observe(getViewLifecycleOwner(), new Observer<Maquinas_Agrarias>() {
             @Override
             public void onChanged(Maquinas_Agrarias maquinasAgrarias) {
-                binding.tvMaquinaCrearTarea.setText("Maquina seleccionada: "+maquinasAgrarias.getPatente());
+                if(maquinasAgrarias.getPatente()==null){
+                    binding.tvMaquinaCrearTarea.setText(getString(R.string.seleccione_una_maquina));
+                }else {
+                    binding.tvMaquinaCrearTarea.setText("Maquina seleccionada: "+maquinasAgrarias.getPatente());
+                }
+
             }
         });
         binding.button.setOnClickListener(new View.OnClickListener() {
@@ -188,5 +208,6 @@ public class CrearTareaFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mViewModel.obtenerObjetos();
+
     }
 }

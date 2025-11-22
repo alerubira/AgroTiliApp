@@ -37,6 +37,9 @@ public class Empleados implements Serializable {
         this.nombre_role = nombre_role;
     }
 
+    public Empleados() {
+    }
+
     public int getId_empleado() {
         return id_empleado;
     }

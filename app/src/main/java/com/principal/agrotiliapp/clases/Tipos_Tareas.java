@@ -11,6 +11,9 @@ public class Tipos_Tareas implements Serializable {
         this.nombre_tipo_tarea = nombre_tipo_tarea;
     }
 
+    public Tipos_Tareas() {
+    }
+
     public int getId_tipo_tarea() {
         return id_tipo_tarea;
     }
