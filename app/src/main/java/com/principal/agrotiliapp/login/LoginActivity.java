@@ -1,20 +1,19 @@
 package com.principal.agrotiliapp.login;
 
-import android.app.AlertDialog;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.principal.agrotiliapp.MainActivity;
-import com.principal.agrotiliapp.R;
+
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,14 +28,8 @@ public class LoginActivity extends AppCompatActivity {
         mv.getMNoLogueado().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(LoginActivity.this)
-                        .setTitle("Login")
-                        .setMessage(s)
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
+                ApiDialogos.abrirDialogoSimple(LoginActivity.this,"Login",s);
+
                 binding.edtUsuario.setText("");
                 binding.edtPassword.setText("");
             }

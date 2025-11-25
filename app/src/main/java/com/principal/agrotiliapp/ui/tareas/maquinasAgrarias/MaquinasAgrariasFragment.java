@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
 import com.principal.agrotiliapp.databinding.FragmentMaquinasAgrariasBinding;
 
@@ -40,15 +41,8 @@ public class MaquinasAgrariasFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Maquinas Agrarias")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(getContext(),"Maquinas Agrarias",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
             }
         });
         mViewModel.getMMaquinas().observe(getViewLifecycleOwner(), new Observer<List<Maquinas_Agrarias>>() {

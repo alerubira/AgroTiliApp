@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.databinding.FragmentEmpleadosDesocupadosBinding;
 
@@ -39,15 +40,8 @@ public class EmpleadosDesocupadosFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Lista Empleados")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(getContext(),"Lista Empleados",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
             }
         });
         mViewModel.getMEmpleados().observe(getViewLifecycleOwner(), new Observer<List<Empleados>>() {

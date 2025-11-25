@@ -13,12 +13,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
@@ -55,7 +57,7 @@ public class CrearTareaFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 if(!s.isEmpty()){
-                    abrirDialogo(s);
+                 ApiDialogos.abrirDialogoSimple(getContext(),"Crear Tarea",s);;
                     mViewModel.setearMMensage();
                 }
 
@@ -75,9 +77,12 @@ public class CrearTareaFragment extends Fragment {
                 binding.spinner.setAdapter(adapter);
             }
         });
-        binding.spinner.setOnTouchListener((v, event) -> {
-            usuarioTocoSpinner = true;
-            return false;
+        binding.spinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                usuarioTocoSpinner = true;
+                return false;
+            }
         });
 
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -190,19 +195,6 @@ public class CrearTareaFragment extends Fragment {
         return root;
     }
 
-
-
-    private void abrirDialogo(String s){
-        new AlertDialog.Builder(getContext())
-                .setTitle("Crear Tarea")
-                .setMessage(s)
-
-                .setNegativeButton("Cerrar", (dialog, which) -> {
-                    // Solo cierra el diálogo
-                    dialog.dismiss();
-                })
-                .show();
-    }
 
     @Override
     public void onResume() {

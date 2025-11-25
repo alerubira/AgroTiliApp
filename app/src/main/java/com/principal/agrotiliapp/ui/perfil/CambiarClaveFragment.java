@@ -3,7 +3,7 @@ package com.principal.agrotiliapp.ui.perfil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.principal.agrotiliapp.R;
+
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.databinding.FragmentCambiarClaveBinding;
 
 public class CambiarClaveFragment extends Fragment {
@@ -34,29 +35,15 @@ public class CambiarClaveFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Cambiar Clave")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(requireContext(),"Cambiar Clave",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
             }
         });
         mViewModel.getMExito().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Cambiar Clave")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(requireContext(),"Cambiar Clave",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
                 binding.edtClaveActual.setText("");
                 binding.edtClaveNuevaC.setText("");
                 binding.edtClaveRepetidaC.setText("");

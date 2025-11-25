@@ -1,11 +1,11 @@
 package com.principal.agrotiliapp.ui.tareas;
 
-import android.app.AlertDialog;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.databinding.FragmentTareasBinding;
 
@@ -35,15 +36,8 @@ public class TareasFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Lista Tareas")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(getContext(),"Liata Tareas",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
             }
         });
         mViewModel.getMTareas().observe(getViewLifecycleOwner(), new Observer<List<Tareas>>() {

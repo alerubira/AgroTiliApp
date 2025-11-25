@@ -3,7 +3,6 @@ package com.principal.agrotiliapp.ui.tareas.tareaSeleccionada;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.databinding.FragmentTareaSeleccionadaBinding;
 
@@ -36,15 +36,8 @@ public class TareaSeleccionadaFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Tarea Seleccionada")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(getContext(),"Tarea Seleccionada",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
             }
         });
         mViewModel.getMTarea().observe(getViewLifecycleOwner(), new Observer<Tareas>() {

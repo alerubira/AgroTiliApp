@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.principal.agrotiliapp.auxiliares.ApiDialogos;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.databinding.FragmentCamposBinding;
 
@@ -39,15 +40,8 @@ public class CamposFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Lista Campos")
-                        .setMessage(s)
+                ApiDialogos.abrirDialogoSimple(getContext(),"Lista Campos",s);
 
-                        .setNegativeButton("Cerrar", (dialog, which) -> {
-                            // Solo cierra el diálogo
-                            dialog.dismiss();
-                        })
-                        .show();
             }
         });
         mViewModel.getMCampos().observe(getViewLifecycleOwner(), new Observer<List<Campos>>() {
