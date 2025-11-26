@@ -24,7 +24,10 @@ public class Empleados implements Serializable {
     private String fecha_egreso;
     private boolean activo;
     private String nombre_role;
-    public Empleados(int id_empleado, int id_role, String apellido, String nombre, String email, boolean ocupado, String fecha_ingreso, String fecha_egreso, boolean activo, String nombre_role) {
+    private String imagen_perfil;
+    public Empleados(int id_empleado, int id_role, String apellido, String nombre, String email,
+                     boolean ocupado, String fecha_ingreso, String fecha_egreso,
+                     boolean activo, String nombre_role,String imagen_perfil) {
         this.id_empleado = id_empleado;
         this.id_role = id_role;
         this.apellido = apellido;
@@ -35,6 +38,7 @@ public class Empleados implements Serializable {
         this.fecha_egreso = fecha_egreso;
         this.activo = activo;
         this.nombre_role = nombre_role;
+        this.imagen_perfil=imagen_perfil;
     }
 
     public Empleados() {
@@ -118,5 +122,13 @@ public class Empleados implements Serializable {
 
     public void setNombre_role(String nombre_role) {
         this.nombre_role = nombre_role;
+    }
+
+    public String getImagen_perfil() {
+        return imagen_perfil;
+    }
+
+    public void setImagen_perfil(String imagen_perfil) {
+        this.imagen_perfil = imagen_perfil;
     }
 }
