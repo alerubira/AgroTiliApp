@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.principal.agrotiliapp.R;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
@@ -44,6 +46,10 @@ public class EmpleadosDesocupadosAdapter extends RecyclerView.Adapter<EmpleadosD
          holder.tvNombreEmpleado.setText(e.getNombre());
          holder.tvFechaIngreso.setText(e.getFecha_ingreso());
          holder.tvRol.setText(e.getNombre_role());
+        Glide.with(context)
+                .load(ApiClient.URLBASE+e.getImagen_perfil())
+                .error("null")
+                .into(holder.imgPerfilEmpleado);
          holder.cardView.setOnClickListener(v->{
              ApiClient.guardarObjeto(context,"empleado",e);
              Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.crearTareaFragment);
@@ -57,6 +63,7 @@ public class EmpleadosDesocupadosAdapter extends RecyclerView.Adapter<EmpleadosD
 
     public class EmpleadosDesocupadosViewHolder extends RecyclerView.ViewHolder{
         private TextView tvIdEmpleado, tvNombreEmpleado, tvApellidoEmpleado,tvFechaIngreso,tvRol;
+        private ImageView imgPerfilEmpleado;
         private CardView cardView;
         public EmpleadosDesocupadosViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +73,7 @@ public class EmpleadosDesocupadosAdapter extends RecyclerView.Adapter<EmpleadosD
             tvNombreEmpleado=itemView.findViewById(R.id.tvNombre);
             tvFechaIngreso=itemView.findViewById(R.id.tvFechaIngreso);
             tvRol=itemView.findViewById(R.id.tvRol);
+            imgPerfilEmpleado=itemView.findViewById(R.id.imgPerfilEmpleado);
         }
     }
 }

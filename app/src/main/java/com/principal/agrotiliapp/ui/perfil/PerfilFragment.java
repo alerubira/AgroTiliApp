@@ -41,7 +41,6 @@ public class PerfilFragment extends Fragment {
         mv.getMEmpleado().observe(getViewLifecycleOwner(), new Observer<Empleados>() {
             @Override
             public void onChanged(Empleados empleado) {
-                ApiDialogos.abrirDialogoSimple(getContext(),"Perfil",empleado.getImagen_perfil());
                 binding.edtIdEmpleado.setText("Codigo Interno: "+empleado.getId_empleado());
                 binding.edtNombre.setText(empleado.getNombre());
                 binding.edtApellido.setText(empleado.getApellido());
@@ -93,6 +92,15 @@ public class PerfilFragment extends Fragment {
                 binding.edtApellido.setEnabled(false);
                 ApiDialogos.abrirDialogoSimple(getContext(),"Perfil",s);
 
+            }
+        });
+        binding.btnCambiarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle=new Bundle();
+                bundle.putString("urlImagen",mv.getMEmpleado().getValue().getImagen_perfil());
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.cambiarImagenFragment,bundle);
             }
         });
         mv.obtenrPerfil();
