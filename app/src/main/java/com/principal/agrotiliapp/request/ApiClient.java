@@ -158,7 +158,7 @@ public class ApiClient {
                              );
 
         @Multipart
-        @PUT("api/Empleados/CambiarImagen")
+        @PUT("api/Empleados/ModificarImagen")
         Call<Empleados>cambiarImagen(@Header("Authorization")String token,
                                      @Part MultipartBody.Part imagen);
     }

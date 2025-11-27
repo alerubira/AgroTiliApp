@@ -20,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.principal.agrotiliapp.R;
 import com.principal.agrotiliapp.auxiliares.ApiDialogos;
+import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.databinding.FragmentCambiarImagenBinding;
 import com.principal.agrotiliapp.request.ApiClient;
 
@@ -41,6 +43,7 @@ public class CambiarImagenFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(CambiarImagenViewModel.class);
         binding=FragmentCambiarImagenBinding.inflate(inflater,container,false);
         View root=binding.getRoot();
+        abrirGaleria();
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -50,8 +53,23 @@ public class CambiarImagenFragment extends Fragment {
         mViewModel.getMUrlImagen().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                String urlActualizada = ApiClient.URLBASE + s + "?t=" + System.currentTimeMillis();
                 Glide.with(getContext())
-                        .load(ApiClient.URLBASE+s)
+                        .load(urlActualizada)
+                        .error("null")
+                        .into(binding.imgCambiarImagen);
+            }
+        });
+        mViewModel.getMEmpleado().observe(getViewLifecycleOwner(), new Observer<Empleados>() {
+            @Override
+            public void onChanged(Empleados empleados) {
+                ApiDialogos.abrirDialogoSimple(getContext(),"Cambiar Imagen","Imagen Modoficada con exito");
+                String urlActualizada = ApiClient.URLBASE
+                        + empleados.getImagen_perfil()
+                        + "?t=" + System.currentTimeMillis();
+                Glide.with(getContext())
+                        .load(urlActualizada)
+
                         .error("null")
                         .into(binding.imgCambiarImagen);
             }
@@ -59,7 +77,7 @@ public class CambiarImagenFragment extends Fragment {
         binding.btnBuscarImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               abrirGaleria();
+                arl.launch(intent);
             }
         });
         // Recuperar el bundle
@@ -79,7 +97,6 @@ public class CambiarImagenFragment extends Fragment {
         arl = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                //Log.d("AgregarInmuebleFragment", "Result: " + result);
                 mViewModel.recibirFoto(result);
 
             }

@@ -47,8 +47,9 @@ public class PerfilFragment extends Fragment {
                 binding.edtRole.setText("Rol dentro de la Empresa: "+empleado.getNombre_role());
                 binding.edtEmail.setText("Email: "+empleado.getEmail());
                 binding.edtFechaIngreso.setText("Fecha de Ingreso: "+empleado.getFecha_ingreso());
+                String urlActualizada = ApiClient.URLBASE + empleado.getImagen_perfil() + "?t=" + System.currentTimeMillis();
                 Glide.with(getContext())
-                        .load(ApiClient.URLBASE+empleado.getImagen_perfil())
+                        .load(urlActualizada)
                         .error("null")
                         .into(binding.imgImagenPerfil);
             }
