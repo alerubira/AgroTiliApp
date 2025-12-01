@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.request.ApiClient;
 import com.principal.agrotiliapp.request.ApiErrorHandler;
@@ -18,12 +19,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CamposViewModel extends AndroidViewModel {
-    private final MutableLiveData<String> mMensage = new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage = new SingleLiveEvent<>();
     private final MutableLiveData<List<Campos>> mCampos = new MutableLiveData<>();
     public CamposViewModel(@NonNull Application application) {
         super(application);
     }
-    public LiveData<String>getMMensage(){
+    public SingleLiveEvent<String>getMMensage(){
         return mMensage;
     }
     public LiveData<List<Campos>>getMCampos(){
@@ -39,14 +40,17 @@ public class CamposViewModel extends AndroidViewModel {
                if(response.isSuccessful()){
                    mCampos.postValue(response.body());
                }else{
-                   mMensage.postValue(ApiErrorHandler.parseError(response));
+                   dispararEventoMensage(ApiErrorHandler.parseError(response));
                }
            }
 
            @Override
            public void onFailure(Call<List<Campos>> call, Throwable t) {
-                  mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                  dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
            }
        });
+    }
+    private void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
     }
 }

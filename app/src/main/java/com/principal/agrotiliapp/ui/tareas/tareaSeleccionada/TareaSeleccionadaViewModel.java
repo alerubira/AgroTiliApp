@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.clases.Tipos_Tareas;
 import com.principal.agrotiliapp.request.ApiClient;
@@ -22,12 +23,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TareaSeleccionadaViewModel extends AndroidViewModel {
-    private final MutableLiveData<String> mMensage = new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage = new SingleLiveEvent<>();
     private final MutableLiveData<Tareas> mTarea = new MutableLiveData<>();
     public TareaSeleccionadaViewModel(@NonNull Application application) {
         super(application);
     }
-    public LiveData<String> getMMensage(){
+    public SingleLiveEvent<String> getMMensage(){
         return mMensage;
     }
     public LiveData<Tareas>getMTarea(){
@@ -39,14 +40,14 @@ public class TareaSeleccionadaViewModel extends AndroidViewModel {
             mTarea.setValue(tarea);
 
         }else{
-            mMensage.setValue("No se recibio ninguna tarea");
+            dispararEventoMensage("No se recibio ninguna tarea");
         }
     }
     public void corroborarDatos(String obsrvaciones){
         if(obsrvaciones==null||obsrvaciones.isEmpty()){
-            mMensage.setValue("Debe agregar Observaciones");
+            dispararEventoMensage("Debe agregar Observaciones");
         }else if(mTarea.getValue()==null){
-            mMensage.setValue("No hay tarea seleccionada");
+            dispararEventoMensage("No hay tarea seleccionada");
         }else{
             finalizarTarea(obsrvaciones);
         }
@@ -59,16 +60,19 @@ public class TareaSeleccionadaViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    mMensage.postValue("La tarea fue finalizada con exito");
+                    dispararEventoMensage("La tarea fue finalizada con exito");
                 } else {
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                    mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                    dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
+    }
+    private void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
     }
 }

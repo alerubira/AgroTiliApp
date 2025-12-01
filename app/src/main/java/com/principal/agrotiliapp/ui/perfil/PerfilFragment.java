@@ -80,18 +80,21 @@ public class PerfilFragment extends Fragment {
         mv.getMModificar().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                String nombre=binding.edtNombre.getText().toString();
-                String apellido=binding.edtApellido.getText().toString();
-                mv.corroborarCampos(nombre,apellido);
+
+                    String nombre=binding.edtNombre.getText().toString();
+                    String apellido=binding.edtApellido.getText().toString();
+                    mv.corroborarCampos(nombre,apellido);
+
+
             }
         });
         mv.getMModificado().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                binding.btnEditarModificar.setText(getText(R.string.editar_perfil));
-                binding.edtNombre.setEnabled(false);
-                binding.edtApellido.setEnabled(false);
-                ApiDialogos.abrirDialogoSimple(getContext(),"Perfil",s);
+                         binding.btnEditarModificar.setText(getText(R.string.editar_perfil));
+                         binding.edtNombre.setEnabled(false);
+                         binding.edtApellido.setEnabled(false);
+                         ApiDialogos.abrirDialogoSimple(getContext(),"Perfil",s);
 
             }
         });

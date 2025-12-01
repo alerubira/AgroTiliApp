@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Tareas;
 import com.principal.agrotiliapp.request.ApiClient;
 import com.principal.agrotiliapp.request.ApiErrorHandler;
@@ -20,13 +21,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TareasViewModel extends AndroidViewModel {
-    private final MutableLiveData<String> mMensage = new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage = new SingleLiveEvent<>();
     private final MutableLiveData<List<Tareas>> mTareas = new MutableLiveData<>();
 
     public TareasViewModel(@NonNull Application application) {
         super(application);
     }
-    public LiveData<String> getMMensage(){
+    public SingleLiveEvent<String> getMMensage(){
         return mMensage;
     }
     public LiveData<List<Tareas>>getMTareas(){
@@ -42,14 +43,17 @@ public class TareasViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mTareas.postValue(response.body());
                 }else{
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Tareas>> call, Throwable t) {
-                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
+    }
+    private void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
     }
 }

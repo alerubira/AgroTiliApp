@@ -72,7 +72,7 @@ public class LoginActivtyViewModel extends AndroidViewModel {
     }
     public void resetear(String email){
         if(email==null|| email.isEmpty()){
-            mNoLogueado.setValue("Debe colocar el meil");
+            mNoLogueado.setValue("Debe colocar el email");
         }else{
             enviaEmail(email);
 

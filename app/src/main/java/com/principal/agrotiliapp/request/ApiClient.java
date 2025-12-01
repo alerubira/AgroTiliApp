@@ -34,8 +34,8 @@ public class ApiClient {
     //public static final String URLBASE = "http://192.168.1.108:5164/";
     //public static final String URLBASE = "https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/";//virtual
 
-    public static final String URLBASE = "http://192.168.1.106:5294/";//en el negocio
-   // public static final String URLBASE = "http://192.168.1.104:5294/";//en casa
+    //public static final String URLBASE = "http://192.168.1.106:5294/";//en el negocio
+    public static final String URLBASE = "http://192.168.1.104:5294/";//en casa
 
 
 
@@ -100,32 +100,32 @@ public class ApiClient {
 
     public interface AgroTiliService{
         @FormUrlEncoded
-        @POST("api/Empleados/login")
+        @POST("api/Login/login")
         Call<String> login(@Field("Usuario") String u, @Field("Clave") String c);
+
+        @FormUrlEncoded
+        @PUT("api/Login/cambiarClave")
+        Call<Void>cambiarClave(@Header("Authorization")String token,
+                               @Field("claveActual")String claveActual,
+                               @Field("claveNueva")String claveNueva);
+
+        @FormUrlEncoded
+        @POST("api/Login/EnviarMail")
+        Call<String>enviarEmail(
+                @Field("Usuario")String email);
+
+        @FormUrlEncoded
+        @PUT("api/Login/RecuperarClave")
+        Call<String>recuperarClave(
+                @Field("email")String email,
+                @Field("claveEmail")String claveEmail,
+                @Field("claveNueva")String claveNueva);
 
         @GET("api/Empleados")
         Call<Empleados>obtenerEmpleado(@Header("Authorization")String token);
 
         @PUT("api/Empleados/actualizar")
         Call<Empleados>actualizarEmpleado(@Header("Authorization")String token,@Body Empleados e);
-
-        @FormUrlEncoded
-        @PUT("api/Empleados/cambiarClave")
-        Call<Void>cambiarClave(@Header("Authorization")String token,
-                               @Field("claveActual")String claveActual,
-                               @Field("claveNueva")String claveNueva);
-
-        @FormUrlEncoded
-        @POST("api/Empleados/EnviarMail")
-        Call<String>enviarEmail(
-                               @Field("Usuario")String email);
-
-        @FormUrlEncoded
-        @PUT("api/Empleados/RecuperarClave")
-        Call<String>recuperarClave(
-                               @Field("email")String email,
-                               @Field("claveEmail")String claveEmail,
-                               @Field("claveNueva")String claveNueva);
 
         @GET("api/Tipos_Tareas")
         Call<List<Tipos_Tareas>>obtenerTiposTareas(@Header("Authorization")String token);

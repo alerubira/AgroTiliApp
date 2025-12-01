@@ -56,10 +56,8 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(!s.isEmpty()){
+
                  ApiDialogos.abrirDialogoSimple(getContext(),"Crear Tarea",s);;
-                    mViewModel.setearMMensage();
-                }
 
             }
         });

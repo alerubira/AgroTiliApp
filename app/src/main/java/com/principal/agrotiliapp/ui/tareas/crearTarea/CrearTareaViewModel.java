@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
@@ -23,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CrearTareaViewModel extends AndroidViewModel {
-    private MutableLiveData<String>mMensage=new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage=new SingleLiveEvent<>();
     private MutableLiveData <List<Tipos_Tareas>>mTiposTareas=new MutableLiveData<>();
     private MutableLiveData<Campos> mCampoSelecionado =new MutableLiveData<>();
     private MutableLiveData<Maquinas_Agrarias> mMaquinaSeleccionada =new MutableLiveData<>();
@@ -35,7 +36,7 @@ public class CrearTareaViewModel extends AndroidViewModel {
         super(application);
         context=getApplication();
     }
-    public LiveData<String>getMMensage(){
+    public SingleLiveEvent<String>getMMensage(){
         return mMensage;
     }
     public LiveData<List<Tipos_Tareas>>getMTiposTareas(){
@@ -77,13 +78,13 @@ public class CrearTareaViewModel extends AndroidViewModel {
                     lista.addAll(response.body());
                     mTiposTareas.postValue(lista);
                 }else{
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Tipos_Tareas>> call, Throwable t) {
-                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
@@ -109,40 +110,38 @@ public class CrearTareaViewModel extends AndroidViewModel {
         if (mTipoTareasSeleccionada.getValue() != null && mTipoTareasSeleccionada.getValue().getId_tipo_tarea() > 0) {
             mHayTarea.setValue(true);
         }else{
-            mMensage.setValue("Debe seleccionar el tipo de tarea para buscar la Maquina");
+            dispararEventoMensage("Debe seleccionar el tipo de tarea para buscar la Maquina");
         }
     }
     public void setearMHayTarea(){
         mHayTarea.setValue(false);
     }
-    public void setearMMensage(){
-        mMensage.setValue("");
-    }
+
     public void setearMTipoTareaSeleccionada(Tipos_Tareas tipo){
         mTipoTareasSeleccionada.setValue(tipo);
     }
     public void cooroborarDatosTarea(){
         Empleados empleado= mEmpleadoSeleccionado.getValue();
         if(empleado.getApellido()==null){
-            mMensage.setValue("Debe seleccionar un Empleado para la tarea");
+            dispararEventoMensage("Debe seleccionar un Empleado para la tarea");
             return;
         }
         Campos campo= mCampoSelecionado.getValue();
         if(campo.getNombre_campo()==null){
-            mMensage.setValue("debe seleccionar un Campo para la tarea");
+            dispararEventoMensage("debe seleccionar un Campo para la tarea");
             return;
         }
         Maquinas_Agrarias maquina= mMaquinaSeleccionada.getValue();
         if(maquina.getPatente()==null){
-            mMensage.setValue("Debe seleccionar una Maquina para la tarea");
+            dispararEventoMensage("Debe seleccionar una Maquina para la tarea");
             return;
         }
         if(mTipoTareasSeleccionada.getValue()==null){
-            mMensage.setValue("Debe seleccionar un tipo de Tatrea");
+            dispararEventoMensage("Debe seleccionar un tipo de Tatrea");
             return;
         }
         if(maquina.getId_tipo_tarea()!=mTipoTareasSeleccionada.getValue().getId_tipo_tarea()){
-            mMensage.setValue("La maquina seleccionada no es aptata para la Tarea");
+            dispararEventoMensage("La maquina seleccionada no es aptata para la Tarea");
             return;
         }
         crearTara(mTipoTareasSeleccionada.getValue().getId_tipo_tarea(),maquina.getId_maquina_agraria(), empleado.getId_empleado(), campo.getId_campo());
@@ -155,24 +154,28 @@ public class CrearTareaViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    mMensage.postValue("Tarea Generada con exito");
+                    dispararEventoMensage("Tarea Generada con exito");
+                    limpiarSharedPreference();
+                    setearMutables();
                 }else{
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
-       limpiarSharedPreference();
-       setearMutables();
+
     }
     private void setearMutables(){
         mTipoTareasSeleccionada.setValue(new Tipos_Tareas());
         mMaquinaSeleccionada.setValue(new Maquinas_Agrarias());
         mCampoSelecionado.setValue(new Campos());
         mEmpleadoSeleccionado.setValue(new Empleados());
+    }
+    private void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
     }
 }

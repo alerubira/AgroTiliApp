@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.principal.agrotiliapp.request.ApiErrorHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import okhttp3.MediaType;
@@ -63,7 +65,7 @@ public class CambiarImagenViewModel extends AndroidViewModel {
             mMensage.setValue("No se recibio ninguna imagen");
         }
     }
-    public void recibirFoto(ActivityResult result) {
+    /*public void recibirFoto(ActivityResult result) {
         if (result.getResultCode() == RESULT_OK) {
             Intent data = result.getData();
             Uri uri = data.getData();
@@ -72,13 +74,55 @@ public class CambiarImagenViewModel extends AndroidViewModel {
 
         }
     }
-    private void cambiarImagen(){
-        //Convertir en base a la uri
-        byte[] imagen = transformarImagen();
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imagen);
-        //Armar multipart
-        MultipartBody.Part imagenPart = MultipartBody.Part.createFormData("imagen", "imagen.jpg", requestFile);
+    public void subirFotoDesdeBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        byte[] imagen = output.toByteArray();
 
+        cambiarImagen(imagen)
+    }*/
+    public void recibirFoto(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+
+            try {
+                Uri uri = result.getData().getData();  // SOLO galería
+                Bitmap bitmap = MediaStore.Images.Media
+                        .getBitmap(context.getContentResolver(), uri);
+
+                subirFotoDesdeBitmap(bitmap);
+
+            } catch (FileNotFoundException e) {
+                mMensage.setValue("No se encontró la imagen seleccionada.");
+            } catch (IOException e) {
+                mMensage.setValue("Error al leer la imagen.");
+            }
+        }
+    }
+
+
+    public void subirFotoDesdeBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        byte[] imagen = output.toByteArray();
+
+        cambiarImagen(imagen);
+    }
+    public void recibirFotoDeCamara(Bitmap bitmap) {
+        subirFotoDesdeBitmap(bitmap);
+    }
+
+
+    private void cambiarImagen(byte[] imagen){
+        //Convertir en base a la uri
+       //  imagen = transformarImagen();
+        //RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imagen);
+        //Armar multipart
+        //MultipartBody.Part imagenPart = MultipartBody.Part.createFormData("imagen", "imagen.jpg", requestFile);
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("image/jpeg"), imagen);
+
+        MultipartBody.Part imagenPart =
+                MultipartBody.Part.createFormData("imagen", "imagen.jpg", requestFile);
         String token= ApiClient.leerToken(context);
         ApiClient.AgroTiliService api=ApiClient.getApiAgroTili();
        Call<Empleados>llamada=api.cambiarImagen(token,imagenPart);

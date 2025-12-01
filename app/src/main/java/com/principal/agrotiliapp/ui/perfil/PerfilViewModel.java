@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
 import com.principal.agrotiliapp.request.ApiErrorHandler;
@@ -20,12 +21,15 @@ import retrofit2.Response;
 
 public class PerfilViewModel extends AndroidViewModel {
       private MutableLiveData<Empleados> mEmpleado=new MutableLiveData<>();
-      private MutableLiveData<String> mMensage=new MutableLiveData<>();
+      private SingleLiveEvent<String> mMensage=new SingleLiveEvent<>();
       private MutableLiveData<String>mEditar=new MutableLiveData<>();
-      private MutableLiveData<String>mModificar=new MutableLiveData<>();
-      private MutableLiveData<String>mModificado=new MutableLiveData<>();
+     // private MutableLiveData<String>mModificar=new MutableLiveData<>();
+      private SingleLiveEvent<String>mModificar=new SingleLiveEvent<>();
+    //  private MutableLiveData<String>mModificado;
+      private SingleLiveEvent<String> mModificado = new SingleLiveEvent<>();
       private Context context;
       private Empleados empleado;
+      private boolean bandera;
 
     public PerfilViewModel(@NonNull Application application) {
         super(application);
@@ -34,18 +38,20 @@ public class PerfilViewModel extends AndroidViewModel {
     public LiveData<Empleados>getMEmpleado(){
         return mEmpleado;
     }
-    public LiveData<String>getMMensage(){
+    public SingleLiveEvent<String>getMMensage(){
         return mMensage;
     }
     public LiveData<String>getMEditar(){
         return mEditar;
     }
-    public LiveData<String>getMModificar(){
+    public SingleLiveEvent<String>getMModificar(){
         return mModificar;
     }
-    public LiveData<String>getMModificado(){
+    public SingleLiveEvent<String> getMModificado() {
         return mModificado;
     }
+
+
     public void obtenrPerfil(){
         String token=ApiClient.leerToken(context);
         ApiClient.AgroTiliService api=ApiClient.getApiAgroTili();
@@ -57,13 +63,13 @@ public class PerfilViewModel extends AndroidViewModel {
                      empleado=response.body();
                      mEmpleado.postValue(empleado);
                 }else{
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Empleados> call, Throwable t) {
-               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+               dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
@@ -71,14 +77,14 @@ public class PerfilViewModel extends AndroidViewModel {
         if(textoBoton.equals(context.getString(R.string.editar_perfil))){
             mEditar.setValue("");
         }else if(textoBoton.equals(context.getString(R.string.modificar_perfil))){
-            mModificar.setValue("");
+            dispararEventoModificar("");
         }else{
-            mMensage.setValue("No se puede realizar la accion");
+            dispararEventoMensage("No se puede realizar la accion");
         }
     }
     public void corroborarCampos(String nombre,String apellido){
         if(nombre==null||nombre.isEmpty()||apellido==null||apellido.isEmpty()){
-            mMensage.setValue("El nombre y el apellido son obligarorios");
+            dispararEventoMensage("El nombre y el apellido son obligarorios");
         }else{
             modificarPerfil( nombre,apellido);
         }
@@ -94,16 +100,27 @@ public class PerfilViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Empleados> call, Response<Empleados> response) {
                 if(response.isSuccessful()){
-                    mModificado.postValue("El perfil del empleado fue modificado con exito");
+                    dispararEventoModificado("El perfil del empleado fue modificado con exito");
+
                 }else{
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Empleados> call, Throwable t) {
-                     mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                     dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
+    private void dispararEventoModificado(String mensaje) {
+        mModificado.setValue(mensaje);
+    }
+    private void dispararEventoModificar(String mensage){
+        mModificar.setValue(mensage);
+    }
+    private void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
+    }
+
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
@@ -21,12 +22,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EmpleadosDesocupadosViewModel extends AndroidViewModel {
-    private final MutableLiveData<String> mMensage = new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage = new SingleLiveEvent<>();
     private final MutableLiveData<List<Empleados>> mEmpleados = new MutableLiveData<>();
     public EmpleadosDesocupadosViewModel(@NonNull Application application) {
         super(application);
     }
-    public LiveData<String> getMMensage(){
+    public SingleLiveEvent<String> getMMensage(){
         return mMensage;
     }
     public LiveData<List<Empleados>>getMEmpleados(){
@@ -42,14 +43,17 @@ public class EmpleadosDesocupadosViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mEmpleados.postValue(response.body());
                 }else{
-                    mMensage.postValue(ApiErrorHandler.parseError(response));
+                    dispararEventoMensage(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Empleados>> call, Throwable t) {
-                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
             }
         });
+    }
+    private void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
     }
 }

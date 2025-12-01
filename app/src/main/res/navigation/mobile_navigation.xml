@@ -68,6 +68,9 @@
         android:label="Crear Tarea"
         tools:layout="@layout/fragment_crear_tarea" >
 
+        <action
+            android:id="@+id/action_crearTareaFragment_to_tareasFragment"
+            app:destination="@id/tareasFragment" />
     </fragment>
     <fragment
         android:id="@+id/tareasFragment"

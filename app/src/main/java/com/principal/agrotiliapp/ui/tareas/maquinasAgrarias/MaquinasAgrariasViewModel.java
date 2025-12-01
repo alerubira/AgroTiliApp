@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.clases.Maquinas_Agrarias;
 import com.principal.agrotiliapp.clases.Tipos_Tareas;
@@ -22,12 +23,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MaquinasAgrariasViewModel extends AndroidViewModel{
-    private final MutableLiveData<String> mMensage = new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage = new SingleLiveEvent<>();
     private final MutableLiveData<List<Maquinas_Agrarias>> mMaquinas = new MutableLiveData<>();
     public MaquinasAgrariasViewModel(@NonNull Application application) {
         super(application);
     }
-    public LiveData<String> getMMensage(){
+    public SingleLiveEvent<String> getMMensage(){
         return mMensage;
     }
     public LiveData<List<Maquinas_Agrarias>>getMMaquinas(){
@@ -39,7 +40,7 @@ public class MaquinasAgrariasViewModel extends AndroidViewModel{
             obtenerMaquinasDesocupadasPorTarea(tipoTarea.getId_tipo_tarea());
 
         }else{
-            mMensage.setValue("No se recibio ningun topo de tarea");
+            dispararEventoMensage("No se recibio ningun topo de tarea");
         }
 
     }
@@ -55,14 +56,17 @@ public class MaquinasAgrariasViewModel extends AndroidViewModel{
                if(response.isSuccessful()){
                    mMaquinas.postValue(response.body());
                }else{
-                   mMensage.postValue(ApiErrorHandler.parseError(response));
+                   dispararEventoMensage(ApiErrorHandler.parseError(response));
                }
            }
 
            @Override
            public void onFailure(Call<List<Maquinas_Agrarias>> call, Throwable t) {
-               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
+               dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
            }
        });
+   }
+   public void dispararEventoMensage(String mensage){
+        mMensage.setValue(mensage);
    }
 }
