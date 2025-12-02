@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.principal.agrotiliapp.R;
+import com.principal.agrotiliapp.auxiliares.Navegacion;
 import com.principal.agrotiliapp.clases.Campos;
 import com.principal.agrotiliapp.request.ApiClient;
 
@@ -43,7 +45,17 @@ public  class CamposAdapter extends RecyclerView.Adapter<CamposAdapter.CamposVie
          holder.tvSuperficie.setText(c.getSuperficie()+"");
          holder.cardView.setOnClickListener(v ->{
              ApiClient.guardarObjeto(context,"campo",c);
-             Navigation.findNavController((Activity)v.getContext(), R.id.nav_host_fragment_content_main).navigate(R.id.crearTareaFragment);
+             Navegacion.navegarBorrandoStack( (Activity) v.getContext(),
+                     R.id.nav_host_fragment_content_main,
+                     R.id.crearTareaFragment,
+                     R.id.tareasFragment,
+                     false);
+            /* NavOptions navOptions = new NavOptions.Builder()
+                     .setPopUpTo(R.id.tareasFragment, false)
+                     .build();
+             Navigation.findNavController((Activity)v.getContext(),
+                     R.id.nav_host_fragment_content_main)
+                     .navigate(R.id.crearTareaFragment,null,navOptions);*/
          });
     }
 

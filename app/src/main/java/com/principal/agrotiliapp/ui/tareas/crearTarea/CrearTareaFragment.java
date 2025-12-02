@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -56,8 +58,7 @@ public class CrearTareaFragment extends Fragment {
         mViewModel.getMMensage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-
-                 ApiDialogos.abrirDialogoSimple(getContext(),"Crear Tarea",s);;
+                ApiDialogos.abrirDialogoSimple(getContext(),"Crear Tarea",s);
 
             }
         });
@@ -184,8 +185,10 @@ public class CrearTareaFragment extends Fragment {
                         })
                         .setPositiveButton("Si",(dialog, which) -> {
                             mViewModel.cooroborarDatosTarea();
+
                         })
                         .show();
+
             }
         });
 
@@ -198,6 +201,7 @@ public class CrearTareaFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mViewModel.obtenerObjetos();
+
 
     }
 }

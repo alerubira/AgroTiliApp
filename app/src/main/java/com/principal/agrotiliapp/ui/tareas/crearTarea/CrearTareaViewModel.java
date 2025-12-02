@@ -122,17 +122,17 @@ public class CrearTareaViewModel extends AndroidViewModel {
     }
     public void cooroborarDatosTarea(){
         Empleados empleado= mEmpleadoSeleccionado.getValue();
-        if(empleado.getApellido()==null){
+        if(empleado==null|| empleado.getApellido()==null){
             dispararEventoMensage("Debe seleccionar un Empleado para la tarea");
             return;
         }
         Campos campo= mCampoSelecionado.getValue();
-        if(campo.getNombre_campo()==null){
+        if(campo==null|| campo.getNombre_campo()==null){
             dispararEventoMensage("debe seleccionar un Campo para la tarea");
             return;
         }
         Maquinas_Agrarias maquina= mMaquinaSeleccionada.getValue();
-        if(maquina.getPatente()==null){
+        if(maquina==null|| maquina.getPatente()==null){
             dispararEventoMensage("Debe seleccionar una Maquina para la tarea");
             return;
         }

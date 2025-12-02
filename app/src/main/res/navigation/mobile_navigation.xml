@@ -70,7 +70,8 @@
 
         <action
             android:id="@+id/action_crearTareaFragment_to_tareasFragment"
-            app:destination="@id/tareasFragment" />
+            app:destination="@id/tareasFragment"
+           />
     </fragment>
     <fragment
         android:id="@+id/tareasFragment"
@@ -79,7 +80,8 @@
         tools:layout="@layout/fragment_tareas" >
         <action
             android:id="@+id/action_tareasFragment_to_crearTareaFragment"
-            app:destination="@id/crearTareaFragment" />
+            app:destination="@id/crearTareaFragment"
+            />
         <action
             android:id="@+id/action_tareasFragment_to_tareaSeleccionadaFragment"
             app:destination="@id/tareaSeleccionadaFragment" />

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +56,7 @@ public class TareasFragment extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(TareasFragment.this)
                         .navigate(R.id.crearTareaFragment);
+
             }
         });
         mViewModel.obtenerTareas();
