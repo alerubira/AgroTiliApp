@@ -40,7 +40,7 @@ public class MaquinasAgrariasViewModel extends AndroidViewModel{
             obtenerMaquinasDesocupadasPorTarea(tipoTarea.getId_tipo_tarea());
 
         }else{
-            dispararEventoMensage("No se recibio ningun topo de tarea");
+            mMensage.postValue("No se recibio ningun topo de tarea");
         }
 
     }
@@ -56,17 +56,15 @@ public class MaquinasAgrariasViewModel extends AndroidViewModel{
                if(response.isSuccessful()){
                    mMaquinas.postValue(response.body());
                }else{
-                   dispararEventoMensage(ApiErrorHandler.parseError(response));
+                   mMensage.postValue(ApiErrorHandler.parseError(response));
                }
            }
 
            @Override
            public void onFailure(Call<List<Maquinas_Agrarias>> call, Throwable t) {
-               dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
+               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
            }
        });
    }
-   public void dispararEventoMensage(String mensage){
-        mMensage.setValue(mensage);
-   }
+
 }

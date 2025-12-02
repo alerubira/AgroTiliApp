@@ -1,6 +1,7 @@
 package com.principal.agrotiliapp.login;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,8 +48,18 @@ public class RecuperarClaveActivity extends AppCompatActivity {
         mv.getMExito().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Intent intent =new Intent(getApplication(),LoginActivity.class);
-                startActivity(intent);
+                new AlertDialog.Builder(RecuperarClaveActivity.this)
+                        .setTitle("Recuperar Clave")
+                        .setMessage(s)
+                        .setNegativeButton("Cerrar Este Dialogo", (dialog, which) -> {
+                            Intent intent =new Intent(getApplication(),LoginActivity.class);
+                            startActivity(intent);
+                            // Solo cierra el diálogo
+                            dialog.dismiss();
+                        })
+                        .show();
+
+
             }
         });
 

@@ -1,6 +1,7 @@
 package com.principal.agrotiliapp.auxiliares;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -28,7 +29,11 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
         mPending.set(true);
         super.setValue(value);
     }
-
+    @Override
+    public void postValue(@Nullable T value) {
+        mPending.set(true);
+        super.postValue(value);
+    }
     @MainThread
     public void call() {
         setValue(null);

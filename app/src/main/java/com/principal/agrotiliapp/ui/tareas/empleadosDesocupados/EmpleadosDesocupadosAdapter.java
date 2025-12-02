@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +17,6 @@ import com.principal.agrotiliapp.R;
 import com.principal.agrotiliapp.auxiliares.Navegacion;
 import com.principal.agrotiliapp.clases.Empleados;
 import com.principal.agrotiliapp.request.ApiClient;
-import com.principal.agrotiliapp.ui.tareas.campos.CamposAdapter;
 
 import java.util.List;
 

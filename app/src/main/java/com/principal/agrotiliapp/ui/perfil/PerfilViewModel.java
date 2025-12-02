@@ -63,13 +63,13 @@ public class PerfilViewModel extends AndroidViewModel {
                      empleado=response.body();
                      mEmpleado.postValue(empleado);
                 }else{
-                    dispararEventoMensage(ApiErrorHandler.parseError(response));
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Empleados> call, Throwable t) {
-               dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
+               mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
@@ -77,14 +77,14 @@ public class PerfilViewModel extends AndroidViewModel {
         if(textoBoton.equals(context.getString(R.string.editar_perfil))){
             mEditar.setValue("");
         }else if(textoBoton.equals(context.getString(R.string.modificar_perfil))){
-            dispararEventoModificar("");
+            mModificar.setValue("");
         }else{
-            dispararEventoMensage("No se puede realizar la accion");
+            mMensage.setValue("No se puede realizar la accion");
         }
     }
     public void corroborarCampos(String nombre,String apellido){
         if(nombre==null||nombre.isEmpty()||apellido==null||apellido.isEmpty()){
-            dispararEventoMensage("El nombre y el apellido son obligarorios");
+            mMensage.setValue("El nombre y el apellido son obligarorios");
         }else{
             modificarPerfil( nombre,apellido);
         }
@@ -100,27 +100,19 @@ public class PerfilViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Empleados> call, Response<Empleados> response) {
                 if(response.isSuccessful()){
-                    dispararEventoModificado("El perfil del empleado fue modificado con exito");
+                    mModificado.postValue("El perfil del empleado fue modificado con exito");
 
                 }else{
-                    dispararEventoMensage(ApiErrorHandler.parseError(response));
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Empleados> call, Throwable t) {
-                     dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
+                     mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
-    private void dispararEventoModificado(String mensaje) {
-        mModificado.setValue(mensaje);
-    }
-    private void dispararEventoModificar(String mensage){
-        mModificar.setValue(mensage);
-    }
-    private void dispararEventoMensage(String mensage){
-        mMensage.setValue(mensage);
-    }
+
 
 }

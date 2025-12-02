@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.principal.agrotiliapp.auxiliares.SingleLiveEvent;
 import com.principal.agrotiliapp.request.ApiClient;
 import com.principal.agrotiliapp.request.ApiErrorHandler;
 
@@ -18,16 +19,16 @@ import retrofit2.Response;
 
 public class RecuperarClaveActivityViewModel extends AndroidViewModel {
     private String email;
-    private MutableLiveData<String> mMensage=new MutableLiveData<>();
-    private MutableLiveData<String> mExito=new MutableLiveData<>();
+    private SingleLiveEvent<String> mMensage=new SingleLiveEvent<>();
+    private SingleLiveEvent<String> mExito=new SingleLiveEvent<>();
     public RecuperarClaveActivityViewModel(@NonNull Application application) {
         super(application);
 
     }
-    LiveData<String>getMMensage(){
+    SingleLiveEvent<String>getMMensage(){
         return mMensage;
     }
-    LiveData<String>getMExito() {
+    SingleLiveEvent<String>getMExito() {
         return mExito;
     }
     public void recibirIntent(Intent intent){
@@ -41,7 +42,7 @@ public class RecuperarClaveActivityViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    mExito.setValue("rr");
+                    mExito.postValue("Clave reseteada con exito");
                 }else{
                     mMensage.postValue(ApiErrorHandler.parseError(response));
                 }

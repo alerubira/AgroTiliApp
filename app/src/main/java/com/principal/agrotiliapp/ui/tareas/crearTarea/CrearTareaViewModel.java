@@ -78,13 +78,13 @@ public class CrearTareaViewModel extends AndroidViewModel {
                     lista.addAll(response.body());
                     mTiposTareas.postValue(lista);
                 }else{
-                    dispararEventoMensage(ApiErrorHandler.parseError(response));
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Tipos_Tareas>> call, Throwable t) {
-                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
@@ -110,7 +110,7 @@ public class CrearTareaViewModel extends AndroidViewModel {
         if (mTipoTareasSeleccionada.getValue() != null && mTipoTareasSeleccionada.getValue().getId_tipo_tarea() > 0) {
             mHayTarea.setValue(true);
         }else{
-            dispararEventoMensage("Debe seleccionar el tipo de tarea para buscar la Maquina");
+            mMensage.setValue("Debe seleccionar el tipo de tarea para buscar la Maquina");
         }
     }
     public void setearMHayTarea(){
@@ -123,25 +123,25 @@ public class CrearTareaViewModel extends AndroidViewModel {
     public void cooroborarDatosTarea(){
         Empleados empleado= mEmpleadoSeleccionado.getValue();
         if(empleado==null|| empleado.getApellido()==null){
-            dispararEventoMensage("Debe seleccionar un Empleado para la tarea");
+            mMensage.setValue("Debe seleccionar un Empleado para la tarea");
             return;
         }
         Campos campo= mCampoSelecionado.getValue();
         if(campo==null|| campo.getNombre_campo()==null){
-            dispararEventoMensage("debe seleccionar un Campo para la tarea");
+            mMensage.setValue("debe seleccionar un Campo para la tarea");
             return;
         }
         Maquinas_Agrarias maquina= mMaquinaSeleccionada.getValue();
         if(maquina==null|| maquina.getPatente()==null){
-            dispararEventoMensage("Debe seleccionar una Maquina para la tarea");
+            mMensage.setValue("Debe seleccionar una Maquina para la tarea");
             return;
         }
         if(mTipoTareasSeleccionada.getValue()==null){
-            dispararEventoMensage("Debe seleccionar un tipo de Tatrea");
+            mMensage.setValue("Debe seleccionar un tipo de Tatrea");
             return;
         }
         if(maquina.getId_tipo_tarea()!=mTipoTareasSeleccionada.getValue().getId_tipo_tarea()){
-            dispararEventoMensage("La maquina seleccionada no es aptata para la Tarea");
+            mMensage.setValue("La maquina seleccionada no es aptata para la Tarea");
             return;
         }
         crearTara(mTipoTareasSeleccionada.getValue().getId_tipo_tarea(),maquina.getId_maquina_agraria(), empleado.getId_empleado(), campo.getId_campo());
@@ -154,17 +154,17 @@ public class CrearTareaViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    dispararEventoMensage("Tarea Generada con exito");
+                    mMensage.postValue("Tarea Generada con exito");
                     limpiarSharedPreference();
                     setearMutables();
                 }else{
-                    dispararEventoMensage(ApiErrorHandler.parseError(response));
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
 
@@ -175,7 +175,5 @@ public class CrearTareaViewModel extends AndroidViewModel {
         mCampoSelecionado.setValue(new Campos());
         mEmpleadoSeleccionado.setValue(new Empleados());
     }
-    private void dispararEventoMensage(String mensage){
-        mMensage.setValue(mensage);
-    }
+
 }

@@ -43,17 +43,15 @@ public class EmpleadosDesocupadosViewModel extends AndroidViewModel {
                 if(response.isSuccessful()){
                     mEmpleados.postValue(response.body());
                 }else{
-                    dispararEventoMensage(ApiErrorHandler.parseError(response));
+                    mMensage.postValue(ApiErrorHandler.parseError(response));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Empleados>> call, Throwable t) {
-                dispararEventoMensage(ApiErrorHandler.defaultFailure(t));
+                mMensage.postValue(ApiErrorHandler.defaultFailure(t));
             }
         });
     }
-    private void dispararEventoMensage(String mensage){
-        mMensage.setValue(mensage);
-    }
+
 }

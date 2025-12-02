@@ -50,12 +50,7 @@ public  class CamposAdapter extends RecyclerView.Adapter<CamposAdapter.CamposVie
                      R.id.crearTareaFragment,
                      R.id.tareasFragment,
                      false);
-            /* NavOptions navOptions = new NavOptions.Builder()
-                     .setPopUpTo(R.id.tareasFragment, false)
-                     .build();
-             Navigation.findNavController((Activity)v.getContext(),
-                     R.id.nav_host_fragment_content_main)
-                     .navigate(R.id.crearTareaFragment,null,navOptions);*/
+
          });
     }
 
